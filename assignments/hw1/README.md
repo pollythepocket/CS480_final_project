@@ -34,7 +34,8 @@ g++ createData.cpp -o gen
 - You can watch the tutorial video for the programming assignment: [https://www.youtube.com/watch?v=73AN7VV9Xcg](https://www.youtube.com/watch?v=73AN7VV9Xcg)
 
 ## Gradescope submission instructions
-- Submit the completed [theory/TheoryAssignment_1.docx](theory/TheoryAssignment_1.docx) and [programming/relationalAlgebra.cpp](programming/relationalAlgebra.cpp) file on Gradescope.
+- Create a PDF file from the completed theory assignment. 
+- Submit the PDF file and completed [programming/relationalAlgebra.cpp](programming/relationalAlgebra.cpp) file on Gradescope.
 - If you have Gradescope access issue, send a message with your First name, Last name, and UIC email address. We will add you manually.
 
 
