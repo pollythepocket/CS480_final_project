@@ -5,6 +5,7 @@ This repository contains both the theory and programming components for the assi
 
 ### Theory Assigment
 - Write your name, UIC email in ID, and the answers in [theory/TheoryAssignment_1.docx](theory/TheoryAssignment_1.docx)
+- Create a PDF file from the completed theory assignment.
 - The theory component includes 7 bonus points (total: 107/100).
 
 ### Programming Assignment
@@ -34,8 +35,7 @@ g++ createData.cpp -o gen
 - You can watch the tutorial video for the programming assignment: [https://www.youtube.com/watch?v=73AN7VV9Xcg](https://www.youtube.com/watch?v=73AN7VV9Xcg)
 
 ## Gradescope submission instructions
-- Create a PDF file from the completed theory assignment. 
-- Submit the PDF file and completed [programming/relationalAlgebra.cpp](programming/relationalAlgebra.cpp) file on Gradescope.
+- Submit the completed theory assignment PDF file and completed [programming/relationalAlgebra.cpp](programming/relationalAlgebra.cpp) program file on Gradescope.
 - If you have Gradescope access issue, send a message with your First name, Last name, and UIC email address. We will add you manually.
 
 
