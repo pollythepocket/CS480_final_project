@@ -32,7 +32,8 @@ g++ createData.cpp -o gen
 # Filename ROW_COUNT COLUMN_COUNT
 ./gen "data/small.bin" 5 2
 ```
-- You can watch the tutorial video for the programming assignment: [https://www.youtube.com/watch?v=73AN7VV9Xcg](https://www.youtube.com/watch?v=73AN7VV9Xcg)
+- You can watch the tutorial video for the programming assignment: https://youtu.be/ppwOU25_WeU
+  
 
 ## Gradescope submission instructions
 - Submit the completed theory assignment PDF file and completed [programming/relationalAlgebra.cpp](programming/relationalAlgebra.cpp) program file on Gradescope.
