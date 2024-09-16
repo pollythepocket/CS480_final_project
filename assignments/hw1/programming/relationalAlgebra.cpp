@@ -116,7 +116,7 @@ void relation<arity>::saveToFile(const char *filename)
         int temp[arity];
         for (int i=0; i<arity; i++)
             temp[i] = tuple[i];
-        fwrite(temp, sizeof(int), dataBuffer.size() * arity, pFile);
+        fwrite(temp, sizeof(int), arity, pFile);
     }
 
     // Close the file
