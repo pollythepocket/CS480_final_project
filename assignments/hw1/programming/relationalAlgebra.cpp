@@ -403,7 +403,7 @@ int main(int argc, char** argv) {
     auto case3InputRelation2 = relation<3>("./data/case3Input2");
     auto crossProductRelation = crossProduct<3, 3>(
         case3InputRelation1, 
-        case3InputRelation1);
+        case3InputRelation2);
     case3InputRelation1.printRelation();
     case3InputRelation2.printRelation();
     crossProductRelation.printRelation();
