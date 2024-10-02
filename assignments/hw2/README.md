@@ -12,8 +12,8 @@ This repository contains SQL programming assignment.
 ...
 ```
 You have to implement **20 SQL queries** across the 5 SQL files.
-- Each query is worth 5.5 points, totalling 110 points. There is no explicit bonus points here, you get all 20 queries right, you get 10 bonus points (110 out of 100).
-- **DO NOT CHANGE ANY DATA OR TABLE STRUCTURE**
+- Each query is worth 5.5 points, totaling 110 points. There is no explicit bonus points here, you get all 20 queries right, you get 10 bonus points (110 out of 100).
+- **DO NOT MODIFY ANY DATA, DATABASE NAME OR TABLE STRUCTURES**
 - **COLUMN NAMES SHOULD EXACTLY MATCH THE `Output column titles` MENTIONED IN EACH QUERY**
 - (Optional) You can import each SQL file to your local MySQL server:
 ```shell
