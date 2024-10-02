@@ -1,10 +1,9 @@
-# Assignment 2
-This repository contains SQL programming assignment.
+# Programming Assignment 2: SQL
 
 ## Deadline: Xth October, midnight (CST).
 
 ### Assignment guideline
-- This repo contains **5 SQL** files
+- This folder contains **5 SQL** files
 - Your task is to complete the SQL queries in each file. Look for patterns like `-- Task X.Y`, for example:
 ```shell
 -- Task 1.1
