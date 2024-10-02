@@ -1,6 +1,6 @@
 # Programming Assignment 2: SQL
 
-## Deadline: 16th October, midnight (CST).
+## Deadline: 17th October, midnight (CST).
 
 ### Assignment guideline
 - This folder contains **5 SQL** files
