@@ -97,5 +97,5 @@ INSERT INTO Publication_Keywords (pub_id, keyword) VALUES
 -- Output column titles: venue_name, total_authors
 
 
--- Task 1.3 Find the third most used keyword. If there is a tie for the number of occurrences, return the keyword that comes first in alphabetical order.
+-- Task 1.3 Find the third most used keyword. If multiple keywords have the same number of occurrences, sort the list by the keyword in alphabetical order to break the tie. 
 -- Output column titles: keyword
