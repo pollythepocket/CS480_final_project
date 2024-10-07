@@ -120,7 +120,7 @@ INSERT INTO Stuff (sales_id, name, gender, age, start_year) VALUES
 
 
 -- Task 5.2 Find all customers who have purchased more than 3 distinct products
--- Please ensure to list the records in descending order
+-- Please ensure to list the records in descending order (ordered by the number of product_count)
 -- Output column titles: customer_id, name, product_count
 
 
