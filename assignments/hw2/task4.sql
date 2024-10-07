@@ -132,7 +132,7 @@ INSERT INTO Enrollment (course_id, enrollment_No, enrollment_date, enrollment_fe
 -- Output column titles: course_id, type, name
 
 
--- Task 4.4 Finding Employees with Salaries Above the Average salary for the year 2021.
+-- Task 4.4 Find names and salaries of employees who earned a salary higher than the average salary for the year 2021.
 -- Output column titles: name, salary
 
 
