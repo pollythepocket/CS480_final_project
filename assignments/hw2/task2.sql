@@ -104,5 +104,6 @@ VALUES
 -- Output column titles: state_name, total_awards
 
 
--- Task 2.3 Find the city names and city population of the state with most awards
+-- Task 2.3 Find the city names and city population of the state with most awards. 
+-- If multiple states have the most awards, select the state whose name comes first alphabetically. Sort the resulting cities by city names in ascending order.
 -- Output column titles: city_name, city_population
