@@ -119,7 +119,7 @@ INSERT INTO Stuff (sales_id, name, gender, age, start_year) VALUES
 -- Output column titles: customer_id, name, total_spent
 
 
--- Task 5.2 Find all customers who have purchased products from more than 3 different categories (products)
+-- Task 5.2 Find all customers who have purchased more than 3 distinct products
 -- Please ensure to list the records in descending order
 -- Output column titles: customer_id, name, product_count
 
