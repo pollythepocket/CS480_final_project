@@ -79,7 +79,7 @@ INSERT INTO Evaluation (evaluation_id, system_id, evaluation_date, rating, comme
 -- Output column titles: database_name, database_rating, database_comment
 
 
--- Task 3.2 Find the database type and minimum rating for each type with an minimum rating greater than 4, ordered by minimum rating in descending order
+-- Task 3.2 Find the database type name and minimum rating for each type with an minimum rating greater than 4, ordered by minimum rating in descending order
 -- Output column titles: database_type, minimum_rating
 
 
