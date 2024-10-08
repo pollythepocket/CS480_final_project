@@ -116,12 +116,12 @@ INSERT INTO Stuff (sales_id, name, gender, age, start_year) VALUES
 
 
 -- Task 5.1 Find the customer who has spent the most money in total
--- Output column titles: customer_id, name, total_spent
+-- Output column titles: customer_id, name (customer), total_spent
 
 
 -- Task 5.2 Find all customers who have purchased more than 3 distinct products
 -- Please ensure to list the records in descending order (ordered by product_count: the number of purchased products)
--- Output column titles: customer_id, name, product_count
+-- Output column titles: customer_id, name (customer), product_count
 
 
 -- Task 5.3 Find sales made between '2024-01-01' and '2024-01-10'
@@ -136,4 +136,4 @@ INSERT INTO Stuff (sales_id, name, gender, age, start_year) VALUES
 
 
 -- Task 5.5 Find customers who purchased a product that no other customers have bought (exclusive purchases).
--- Output column titles: customer_id, name, product_name
+-- Output column titles: customer_id, name (customer), product_name
