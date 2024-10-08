@@ -139,4 +139,5 @@ INSERT INTO Stuff (sales_id, name, gender, age, start_year) VALUES
 
 -- Task 5.5 Find customers who purchased a product that no other customers have bought (exclusive purchases).
 -- Output column titles: customer_id, name, product_name
+-- Please sort the outputs by customer_id in ascending order.
 -- Note: column name is the name of the customer.
