@@ -1,0 +1,95 @@
+/* General styling for the body to center content */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;  /* Horizontal centering */
+  align-items: center;      /* Vertical centering */
+}
+
+/* Centering the container */
+.container {
+  width: 100%;
+  width: 500px;
+  max-width: 600px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center; /* Centering text content */
+}
+
+/* Styling the form */
+form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Styling labels */
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: left;
+  width: 100%;
+}
+
+/* Styling input box */
+input[type="text"] {
+  padding-block: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%;
+}
+
+/* Styling submit button */
+button {
+  padding: 10px;
+  background-color: #28a745;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 30%;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+/* Styling the results section */
+pre {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: left;
+  padding-block: 50px;
+}
+
+/* Styling for h1 */
+h1 {
+  font-size: 36px; 
+  font-weight: bold; 
+  color: #007bff; 
+  text-transform: uppercase; 
+  padding-bottom: 10px; 
+  transition: color 0.3s ease;
+}
+
+p {
+  margin: 20px 0 -15px 0;
+  text-align: left;
+  color: #878787
+}

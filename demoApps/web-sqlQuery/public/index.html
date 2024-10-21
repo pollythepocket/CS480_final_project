@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MySQL Query Example</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Query MySQL Database</h1>
+    <form action="/query" method="POST">
+      <label for="query">Enter SQL Query:</label>
+      <input type="text" id="query" name="query" required>
+      <button type="submit">Run Query</button>
+    </form>
+
+    <p>Results:</p>
+    <pre id="results"></pre>
+  </div>
+
+  <script>
+    const form = document.querySelector('form');
+    const resultsContainer = document.getElementById('results');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const query = formData.get('query');
+      
+      try {
+        const response = await fetch('/query', {
+          method: 'POST',
+          body: new URLSearchParams(formData)
+        });
+        const data = await response.json();
+        resultsContainer.textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        resultsContainer.textContent = `Error: ${error.message}`;
+      }
+    });
+  </script>
+</body>
+</html>
