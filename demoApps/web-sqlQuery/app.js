@@ -30,11 +30,6 @@ connection.connect((err) => {
   console.log('Connected to MySQL');
 });
 
-// Serve the HTML client
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
-
 // API to query the MySQL database
 app.post('/query', (req, res) => {
   const { query } = req.body;
