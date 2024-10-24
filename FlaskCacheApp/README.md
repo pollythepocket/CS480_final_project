@@ -25,7 +25,24 @@ The Book Share app is a straightforward CRUD (Create, Read, Update, Delete) appl
 
 Flowchart for **Show Books with Pagination and Caching**:
 
-![Show Books with Pagination and Caching](screenshots/flow.png)
+```mermaid
+flowchart TD
+    A[User Request with Page Number] --> B{Data in Redis Cache?}
+    
+    %% Yes path
+    B -->|Yes| C[Access Redis Cache]
+    
+    %% No path
+    B -->|No| D[Query MySQL Database]
+    D --> E[Store Full Dataset in Redis Cache]
+    
+    %% Common pagination logic
+    C --> F["Calculate Pagination:\nstart = (page - 1) * 100\nend = page * 100"]
+    E --> F
+    F --> G["Return Response:\n1. Sliced Data (100 books)\n2. Total Pages List"]
+```
+
+[//]: # (![Show Books with Pagination and Caching]&#40;screenshots/flow.png&#41;)
 
 
 ## Local setup
