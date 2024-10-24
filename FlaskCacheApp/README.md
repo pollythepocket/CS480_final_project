@@ -37,9 +37,9 @@ flowchart TD
     D --> E[Store Full Dataset in Redis Cache]
     
     %% Common pagination logic
-    C --> F["Calculate Pagination:\nstart = (page - 1) * 100\nend = page * 100"]
+    C --> F["Calculate Pagination: start = (page - 1) * 100, end = page * 100"]
     E --> F
-    F --> G["Return Response:\n1. Sliced Data (100 books)\n2. Total Pages List"]
+    F --> G["Return Response:Sliced Data (100 books) and Total Pages List"]
 ```
 
 [//]: # (![Show Books with Pagination and Caching]&#40;screenshots/flow.png&#41;)
