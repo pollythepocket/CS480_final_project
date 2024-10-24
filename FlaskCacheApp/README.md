@@ -99,14 +99,18 @@ flask run
 ```
 The app will run at [http://127.0.0.1:5000](http://127.0.0.1:5000).
 
-### (Optional) data generator utility
+### (Optional) data generator utility and clearing Redis cache
 - Use the [data_generator.py](data_generator.py) script to create a custom-sized table.
 ```shell
 python data_generator.py --rows 500000
 ```
 You can adjust the number of rows by changing the value of `--rows` as needed. 
 It uses Faker package to generate the SQL file with realistic data.
-
+- Clear Redis cache:
+```shell
+redis-cli
+flushall
+```
 ## Demonstration
 
 Retrieval time from MySQL:
