@@ -20,8 +20,13 @@ The Book Share app is a straightforward CRUD (Create, Read, Update, Delete) appl
 - **Add a New Book**: Allows users to add a new book to the MySQL database.
 - **Update an Existing Book**: Users can modify the details of an existing book.
 - **Delete a Book**: Provides the ability to remove a book from the database.
-- **Show Books with Pagination**: Displays the list of books with pagination and caching for easy navigation through large datasets.
+- **Show Books with Pagination and Caching**: Displays the list of books with pagination and caching for easy navigation through large datasets.
 - **Search for a Book**: Users can search for books by ID, title, or any string field to quickly find relevant entries.
+
+Flowchart for **Show Books with Pagination and Caching**:
+
+![Show Books with Pagination and Caching](screenshots/flow.png)
+
 
 ## Local setup
 
