@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Add Book
+{% endblock %}
+
+{% block content %}
+<h1>Add Book</h1>
+
+<!-- Add Book Form -->
+<h2 id="add-book-section" class="mb-3">Add a New Book</h2>
+<form method="POST" action="{{ url_for('insert_book_view') }}" class="row g-3">
+    <div class="col-md-6">
+        <label for="book_id" class="form-label">Book ID</label>
+        <input type="text" name="book_id" class="form-control" id="book_id" required>
+    </div>
+    <div class="col-md-6">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" name="title" class="form-control" id="title" required>
+    </div>
+    <div class="col-md-6">
+        <label for="category" class="form-label">Category</label>
+        <input type="text" name="category" class="form-control" id="category">
+    </div>
+    <div class="col-md-6">
+        <label for="authors" class="form-label">Authors</label>
+        <input type="text" name="authors" class="form-control" id="authors">
+    </div>
+    <div class="col-md-6">
+        <label for="publisher" class="form-label">Publisher</label>
+        <input type="text" name="publisher" class="form-control" id="publisher">
+    </div>
+    <div class="col-md-6">
+        <label for="edition" class="form-label">Edition</label>
+        <input type="text" name="edition" class="form-control" id="edition">
+    </div>
+    <div class="col-md-6">
+        <label for="available_from" class="form-label">Available From</label>
+        <input type="date" name="available_from" class="form-control" id="available_from">
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Add Book</button>
+    </div>
+</form>
+
+
+{% endblock %}
+{% block scripts %}
+{% endblock %}

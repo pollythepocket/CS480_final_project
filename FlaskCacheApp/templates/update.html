@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Update Book - {{ book.title }}
+{% endblock %}
+
+{% block content %}
+<h1>Update Book - {{ book.title }} </h1>
+
+<form method="POST" action="{{ url_for('update_book_view', book_id=book.book_id) }}" class="row g-3">
+    <div class="col-md-6">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" name="title" class="form-control" id="title" value="{{ book.title }}" required>
+    </div>
+    <div class="col-md-6">
+        <label for="category" class="form-label">Category</label>
+        <input type="text" name="category" class="form-control" id="category" value="{{ book.category }}">
+    </div>
+    <div class="col-md-6">
+        <label for="authors" class="form-label">Authors</label>
+        <input type="text" name="authors" class="form-control" id="authors" value="{{ book.authors }}">
+    </div>
+    <div class="col-md-6">
+        <label for="publisher" class="form-label">Publisher</label>
+        <input type="text" name="publisher" class="form-control" id="publisher" value="{{ book.publisher }}">
+    </div>
+    <div class="col-md-6">
+        <label for="edition" class="form-label">Edition</label>
+        <input type="text" name="edition" class="form-control" id="edition" value="{{ book.edition }}">
+    </div>
+    <div class="col-md-6">
+        <label for="available_from" class="form-label">Available From</label>
+        <input type="date" name="available_from" class="form-control" id="available_from"
+               value="{{ book.available_from }}">
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Update Book</button>
+    </div>
+</form>
+
+{% endblock %}
+{% block scripts %}
+{% endblock %}
