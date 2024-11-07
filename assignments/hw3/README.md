@@ -69,7 +69,7 @@ Complete the [1_hospital_management_system.sql](1_hospital_management_system.sql
 
 ### Application 2: Resume Builder Application
 #### DDL Part (Task 2.1):
-Based on the provided ER diagram of the **Resume Builder** application, write the SQL Data Definition Language (DDL) statements to create the database schema. 
+Based on the provided ER diagram of the **Resume Builder** application, write the SQL Data Definition Language (DDL) statements to create the database schema. Every user should have at least one resume.
 The SQL script should:
 - Create tables: Define tables for all the entities and relationships shown in the diagram. The tables are: User, Resume, Experience, Education, Skill, Resume_Skill. 
 - Specify primary keys: Assign primary keys to each table as shown.
