@@ -12,7 +12,7 @@ The SQL script should:
 - Include data types: Use appropriate data types for each attribute (e.g., INT, VARCHAR, DATE).
 - Add constraints: Ensure attributes like NOT NULL, UNIQUE, and other necessary constraints are included.
 
-![alt hospital_management_system](erd/hospital_management_system.png)
+![alt hospital_management_system](erd/hospital_management_system.png){ width=100px }
 
 #### DML Part (Task 1.2, 1.3, 1.4):
 Using the SQL schema from Task 1.1, follow these steps to perform data operations. After completing each task, display the content of all the tables to show the updated data. 
