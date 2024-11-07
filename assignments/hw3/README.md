@@ -61,7 +61,7 @@ record_id = 2, work_id = 2
 - Update patient with name "Alice Smith" to "Alice Johnson".
 
 ##### Task 1.4. Delete Data
-- Delete a doctor with work_id = 1 from the Doctor table and ensure that all related records in other tables (like Affiliation) are also removed.
+- Delete a doctor with work_id = 1.
 - Delete the patient with the name "Charlie Brown."
 
 Complete the [1_hospital_management_system.sql](1_hospital_management_system.sql) file with all DDL and DML statements described above.
