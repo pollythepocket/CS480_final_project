@@ -4,7 +4,7 @@ USE hw3_hms;
 
 -- DDL section
 
--- Task 1.1: Create tables: Department, Ward, Patient, Doctor, Composition, Admission, Affiliation, Diagnosis.
+-- Task 1.1: Create tables: Department, Ward, Patient, Doctor, Diagnosis.
 
 -- DML section:
 
@@ -15,9 +15,6 @@ SELECT * FROM Department;
 SELECT * FROM Ward;
 SELECT * FROM Patient;
 SELECT * FROM Doctor;
-SELECT * FROM Composition;
-SELECT * FROM Admission;
-SELECT * FROM Affiliation;
 SELECT * FROM Diagnosis;
 
 
@@ -28,9 +25,6 @@ SELECT * FROM Department;
 SELECT * FROM Ward;
 SELECT * FROM Patient;
 SELECT * FROM Doctor;
-SELECT * FROM Composition;
-SELECT * FROM Admission;
-SELECT * FROM Affiliation;
 SELECT * FROM Diagnosis;
 
 
@@ -41,7 +35,4 @@ SELECT * FROM Department;
 SELECT * FROM Ward;
 SELECT * FROM Patient;
 SELECT * FROM Doctor;
-SELECT * FROM Composition;
-SELECT * FROM Admission;
-SELECT * FROM Affiliation;
 SELECT * FROM Diagnosis;
