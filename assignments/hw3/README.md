@@ -31,22 +31,38 @@ Do the same after completing task 1.3 and task 1.4.
 ##### Task 1.2. Insert Data
 ```shell
 Department:
-dept_id = 101, dept_name = 'Cardiology', dept_address = '1st Floor, Building A', and dept_phone = '555-1234'.
-dept_id = 102, dept_name = 'Neurology', dept_address = '1st Floor, Building B', and dept_phone = '555-9876'.
+dept_id = 1, dept_name = 'Cardiology', dept_address = '1st Floor, Building A', and dept_phone = '555-1234'.
+dept_id = 2, dept_name = 'Neurology', dept_address = '1st Floor, Building B', and dept_phone = '555-9876'.
+
+Ward:
+ward_id = 1, bed_id = 101, dept_id = 1.
+ward_id = 2, bed_id = 102, dept_id = 1.
+ward_id = 3, bed_id = 201, dept_id = 2.
+
+Patient:
+record_id = 1, name = 'Alice Smith', gender = 'F', ward_id = 1.
+record_id = 2, name = 'Bob Jones', gender = 'M', ward_id = NULL.
+record_id = 3, name = 'Charlie Brown', gender = 'M', ward_id = 3.
 
 Doctor:
-work_id = 1, name = ‘Dr. Smith’, title = ‘'Cardiologist', age = 45.
+work_id = 1, name = ‘Dr. Smith’, title = ‘'Cardiologist', age = 45, dept_id = 1.
+work_id = 2, name = ‘Dr. Emily White’, title = ‘'Cardiologist', age = 38, dept_id = 1.
+work_id = 3, name = ‘Dr. John Doe’, title = ‘'Neurologist', age = 42, dept_id = 2.
 
-Insert data into table Affiliation to assign Dr. Smith to the ‘Cardiology’ department (dept_id = 101).
+Diagnosis:
+record_id = 1, work_id = 1
+record_id = 2, work_id = 2
 ```
 
 ##### Task 1.3. Update Data
 
-- Update the phone number of the department with “dept_id = 101” to ‘555-2345’.
-- Update the existing doctor with work_id = 1 to the other department (dept_id = 102).
+- Update the phone number of the department with “dept_id = 1” to ‘555-2345’.
+- Update the existing doctor with work_id = 1 to the other department (dept_id = 2).
+- Update patient with name "Alice Smith" to "Alice Johnson".
 
 ##### Task 1.4. Delete Data
 - Delete a doctor with work_id = 1 from the Doctor table and ensure that all related records in other tables (like Affiliation) are also removed.
+- Delete the patient with the name "Charlie Brown."
 
 Complete the [1_hospital_management_system.sql](1_hospital_management_system.sql) file with all DDL and DML statements described above.
 
