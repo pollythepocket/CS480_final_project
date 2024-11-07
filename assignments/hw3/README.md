@@ -6,7 +6,7 @@
 #### DDL Part (Task 1.1):
 Based on the provided ER diagram of the **Hospital Management System** application, write the SQL Data Definition Language (DDL) statements to create the database schema. 
 The SQL script should:
-- Create tables: Define tables for all the entities and relationships shown in the diagram. The tables are: Department, Ward, Patient, Doctor, Composition, Admission, Affiliation, Diagnosis. 
+- Create tables: Define tables for all the entities and relationships shown in the diagram. The tables are: Department, Ward, Patient, Doctor, Diagnosis. 
 - Specify primary keys: Assign primary keys to each table as shown.
 - Set foreign keys: Define foreign key constraints to maintain referential integrity between tables.
 - Include data types: Use appropriate data types for each attribute (e.g., INT, VARCHAR, DATE).
@@ -23,9 +23,6 @@ SELECT * FROM Department;
 SELECT * FROM Ward;
 SELECT * FROM Patient;
 SELECT * FROM Doctor;
-SELECT * FROM Composition;
-SELECT * FROM Admission;
-SELECT * FROM Affiliation;
 SELECT * FROM Diagnosis;
 ```
 
