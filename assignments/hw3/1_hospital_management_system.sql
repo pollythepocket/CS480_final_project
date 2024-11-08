@@ -3,6 +3,7 @@ CREATE DATABASE hw3_hms;
 USE hw3_hms;
 
 -- DDL section
+-- Please maintain the order of all tables as shown in the code below, as the autograder will evaluate each table in this exact sequence. 
 
 -- Task 1.1: Create tables: Department, Ward, Patient, Doctor, Diagnosis.
 
