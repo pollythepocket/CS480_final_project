@@ -5,6 +5,7 @@ USE hw3_resume_builder;
 -- DDL section
 
 -- Task 2.1: Create tables: User, Resume, Experience, Education, Skill, Resume_Skill
+-- Please maintain the order of all tables as shown in the code below, as the autograder will evaluate each table in this exact sequence.
 
 -- DML section:
 
