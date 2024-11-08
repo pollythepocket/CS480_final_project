@@ -22,7 +22,8 @@ The SQL script should:
 - Include data types: Use appropriate data types for each attribute (e.g., INT, VARCHAR, DATE).
 - Add constraints: Ensure attributes like NOT NULL, UNIQUE, and other necessary constraints are included.
 
-<img src="erd/hospital_management_system.png" alt="hospital_management_system" width="60%"/>
+![alt hms](programming/erd/hospital_management_system.png)
+
 
 #### DML Part (Task 1.2, 1.3, 1.4):
 Using the SQL schema from Task 1.1, follow these steps to perform data operations. After completing each task, display the content of all the tables to show the updated data. 
@@ -74,7 +75,7 @@ record_id = 2, work_id = 2
 - Delete a doctor with work_id = 1.
 - Delete the patient with the name "Charlie Brown."
 
-Complete the [1_hospital_management_system.sql](1_hospital_management_system.sql) file with all DDL and DML statements described above.
+Complete the [1_hospital_management_system.sql](programming/1_hospital_management_system.sql) file with all DDL and DML statements described above.
 
 
 ### Application 2: Resume Builder Application
@@ -87,7 +88,7 @@ The SQL script should:
 - Include data types: Use appropriate data types for each attribute (e.g., INT, VARCHAR, DATE).
 - Add constraints: Ensure attributes like NOT NULL, UNIQUE, and other necessary constraints are included.
 
-![alt resume](erd/resume_builder.png)
+![alt resume](programming/erd/resume_builder.png)
 
 #### DML Part (Task 2.2, 2.3, 2.4):
 Using the SQL schema from Task 2.1, follow these steps to perform data operations. After completing each task, display the content of all the tables to show the updated data. 
@@ -143,7 +144,7 @@ Eve: resume_id = 2, skill_id = 3.
 - Delete the user `Bob`.
 - Remove the skill `SQL`.
 
-Complete the [2_resume_builder.sql](2_resume_builder.sql) file with all DDL and DML statements described above.
+Complete the [2_resume_builder.sql](programming/2_resume_builder.sql) file with all DDL and DML statements described above.
 
 ## Programming Assignment guideline
 - This folder contains **2** applications ERD to convert them to SQL schema and perform several data manipulation queries on them.
@@ -159,7 +160,7 @@ You have to implement **8 tasks** across the 2 SQL files.
 
 ## Gradescope submission instructions
 - Submit the completed theory assignment PDF file and completed SQL files on Gradescope.
-- Total 150 points for undergrads and 130 points for grads
+- Total 150 points for undergrads and 130 points for grads.
 - We will grade the DDL parts manually.
 - For the DML parts, you will see `test_case_task_<TASK_NUMBER> (test_SQL_Queries.TestFunctions) (10/10)` if it passes the testcase.
 - If you have Gradescope access issue, send a message with your First name, Last name, and UIC email address. We will add you manually.
