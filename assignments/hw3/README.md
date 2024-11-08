@@ -4,7 +4,7 @@ This repository contains both the theory and programming components for the assi
 ## Deadline: 16th November, midnight (CST).
 
 ## Theory Assigment
-- Write your name, UIC email in ID, and the answers in [theory/TheoryAssignment_3.docx](theory/TheoryAssignment_3.docx)
+- Write your name, UIC email in ID, and the answers in [theory/TheoryAssignment_3.pdf](theory/TheoryAssignment_3.pdf)
 - Create a PDF file from the completed theory assignment.
 - The theory component has 2 questions. 
 - 5 points each for graduate students and 15 points each for undergraduates.
