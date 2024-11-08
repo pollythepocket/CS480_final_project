@@ -1,6 +1,16 @@
-# Programming Assignment 3: DDL and DML
+# Assignment 3
+This repository contains both the theory and programming components for the assignment.
 
 ## Deadline: 16th November, midnight (CST).
+
+## Theory Assigment
+- Write your name, UIC email in ID, and the answers in [theory/TheoryAssignment_3.docx](theory/TheoryAssignment_3.docx)
+- Create a PDF file from the completed theory assignment.
+- The theory component has 2 questions. 
+- 5 points each for graduate students and 15 points each for undergraduates.
+
+## Programming Assignment
+- [programming](programming) folder contains two SQL files.
 
 ### Application 1: Hospital Management System
 #### DDL Part (Task 1.1):
@@ -135,7 +145,7 @@ Eve: resume_id = 2, skill_id = 3.
 
 Complete the [2_resume_builder.sql](2_resume_builder.sql) file with all DDL and DML statements described above.
 
-## Assignment guideline
+## Programming Assignment guideline
 - This folder contains **2** applications ERD to convert them to SQL schema and perform several data manipulation queries on them.
 - Your task is to complete the SQL queries (both DDL and DML) in each file. Look for patterns like `-- Task X.Y`, for example:
 ```shell
@@ -148,7 +158,8 @@ You have to implement **8 tasks** across the 2 SQL files.
 - **DO NOT MODIFY ANY CASE OF THE ENTITY NAMES OR ATTRIBUTE NAMES**
 
 ## Gradescope submission instructions
-- Submit the SQL files on Gradescope.
+- Submit the completed theory assignment PDF file and completed SQL files on Gradescope.
+- Total 150 points for undergrads and 130 points for grads
 - We will grade the DDL parts manually.
 - For the DML parts, you will see `test_case_task_<TASK_NUMBER> (test_SQL_Queries.TestFunctions) (10/10)` if it passes the testcase.
 - If you have Gradescope access issue, send a message with your First name, Last name, and UIC email address. We will add you manually.
