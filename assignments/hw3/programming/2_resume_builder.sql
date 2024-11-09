@@ -6,6 +6,13 @@ USE hw3_resume_builder;
 
 -- Task 2.1: Create tables: User, Resume, Experience, Education, Skill, Resume_Skill
 -- Please maintain the order of all tables as shown in the code below, as the autograder will evaluate each table in this exact sequence.
+-- Output (please maintain the order of attributes):
+-- User: user_id, name, email
+-- Resume: resume_id, title, user_id
+-- Experience: experience_id, resume_id, company, job_title, start_date, end_date
+-- Education: education_id, resume_id, institution, degree, graduation_year
+-- Skill: skill_id, skill_name
+-- Resume_Skill: resume_id, skill_id
 
 -- DML section:
 
