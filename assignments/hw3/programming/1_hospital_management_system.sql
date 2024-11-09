@@ -6,6 +6,11 @@ USE hw3_hms;
 -- Please maintain the order of all tables as shown in the code below, as the autograder will evaluate each table in this exact sequence. 
 
 -- Task 1.1: Create tables: Department, Ward, Patient, Doctor, Diagnosis.
+-- Department table: dept_id, dept_name, dept_address, dept_phone
+-- Ward table: ward_id, bed_id, dept_id
+-- Patient table: record_id, name, gender, ward_id
+-- Doctor table: work_id, name, title, age, dept_id 
+-- Diagnosis table: work_id, record_id
 
 -- DML section:
 
