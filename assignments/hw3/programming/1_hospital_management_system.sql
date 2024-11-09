@@ -7,7 +7,7 @@ USE hw3_hms;
 
 -- Task 1.1: Create tables: Department, Ward, Patient, Doctor, Diagnosis.
 
--- Output (please maintain the order of attributes):
+-- Output (please maintain the order of columns):
 -- Department table: dept_id, dept_name, dept_address, dept_phone
 -- Ward table: ward_id, bed_id, dept_id
 -- Patient table: record_id, name, gender, ward_id
