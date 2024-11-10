@@ -119,10 +119,10 @@ Eve: resume_id = 2, user_id = 3, title = 'Security Specialist Resume'.
 Education:
 Alice: education_id = 1, resume_id = 1, institution = 'UIC', degree = 'B.Sc. Computer Science', graduation_year = 2023.
 Alice: education_id = 2, resume_id = 1, institution = 'Advanced Coding Bootcamp', degree = 'Software Engineering Certification', graduation_year = 2024.
-Eve: education_id = 3, resume_id = 3, institution = 'BU', degree = 'B.Sc. Cybersecurity', graduation_year = 2023.
+Eve: education_id = 3, resume_id = 2, institution = 'BU', degree = 'B.Sc. Cybersecurity', graduation_year = 2023.
 
 Experience:
-Eve: experience_id = 1, resume_id = 3, company = 'AOL', job_title = 'Cybersecurity Analyst', start_date = '2024-05-01', end_date = '2024-11-01'.
+Eve: experience_id = 1, resume_id = 2, company = 'AOL', job_title = 'Cybersecurity Analyst', start_date = '2024-05-01', end_date = '2024-11-01'.
 
 Skill:
 skill_id = 1, skill_name = 'Python'.
