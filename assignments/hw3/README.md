@@ -1,7 +1,7 @@
 # Assignment 3
 This repository contains both the theory and programming components for the assignment.
 
-## Deadline: 16th November, midnight (CST).
+## Deadline: 18th November, midnight (CST).
 
 ## Theory Assigment
 - Write your name, UIC email in ID, and the answers in [theory/TheoryAssignment_3.pdf](theory/TheoryAssignment_3.pdf)
