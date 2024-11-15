@@ -28,15 +28,15 @@ def generate_data(row_count):
     # Start date: October 22, 2024 | End date: December 31, 2024
     start_date = datetime(2024, 10, 22)
     end_date = datetime(2024, 12, 31)
-    sql_file = 'book_share_db.sql'
-    # Check if the file exists and delete it
+    sql_file = 'music_share_db.sql'
+    # TODO: REDO THIS
     if os.path.exists(sql_file):
         os.remove(sql_file)
     with open(sql_file, 'w') as f:
         ddl = '''
-        DROP DATABASE IF EXISTS book_share_db;
-        CREATE DATABASE book_share_db;
-        USE book_share_db;
+        DROP DATABASE IF EXISTS music_share_db;
+        CREATE DATABASE music_share_db;
+        USE music_share_db;
         CREATE TABLE IF NOT EXISTS books(
             book_id VARCHAR(30) PRIMARY KEY,
             title VARCHAR(255) NOT NULL,

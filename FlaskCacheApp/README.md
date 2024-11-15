@@ -2,7 +2,7 @@
 
 This app demonstrates how caching with **Redis** can significantly improve the performance of a **Flask** web application backed by **MySQL**. The application uses **Flask-Caching** and **PyMySQL** to interact with the database and cache the query results in Redis, effectively reducing the response time for subsequent queries.
 
-The application contains a single `books` table with 500k rows. Without caching, fetching all rows from MySQL takes approximately **7 seconds**. By using Redis caching, the same query retrieves the data in around **1 second**.
+The application contains a single `music` table with 500k rows. Without caching, fetching all rows from MySQL takes approximately **7 seconds**. By using Redis caching, the same query retrieves the data in around **1 second**.
 
 ## Tech Stack
 
@@ -110,7 +110,7 @@ pip install -r requirements.txt
 ### Setting up MySQL and Importing Data
 - Import the initial database setup which contains 500k rows:
 ```shell
-mysql -u root -p<book_share_db.sql
+mysql -u root -p<music_share_db.sql
 ```
 - Update the [.flaskenv](.flaskenv) file with your MySQL database user and password.
 

@@ -20,8 +20,8 @@ app.get('/', (req, res) => {
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '<password>',
-    database: 'demo_app'
+    password: 'PollyGrace15515!',
+    database: 'music_app'
 });
 
 db.connect((err) => {
