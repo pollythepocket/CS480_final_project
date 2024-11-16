@@ -36,18 +36,19 @@ app.post('/register', (req, res) => {
     // Hash the password before storing it
     const hashedPassword = bcrypt.hashSync(password, 10);
 
-    const query = 'INSERT INTO users (username, password) VALUES (?, ?)';
-    db.query(query, [username, hashedPassword], (err, result) => {
-        if (err) return res.status(400).send('User already exists');
+    const query = 'INSERT INTO Clients (username, password, email, has_artist_permission) VALUES (?, ?, ?, ?)';
+    db.query(query, [username, hashedPassword, null, 0], (err, result) => {
+        if (err) return res.status(400).send(err.message);
         res.send('Registration successful!');
     });
-});
 
+});
+//TODO: TRY TO LOG IN AN ADMIN FIRST AND IF NOT WORK, THEN USER!!
 // Login user
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
-    const query = 'SELECT * FROM users WHERE username = ?';
+    const query = 'SELECT * FROM Clients WHERE username = ?';
     db.query(query, [username], (err, results) => {
         if (err) throw err;
 
