@@ -1,8 +1,13 @@
+require('dotenv').config({ path: ".env.local" })
 const express = require('express');
 const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const path = require('path');
+
+// //imports environment variables from .env or .env.local file
+// dotenv.config({ path: ".env.local" });
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -20,7 +25,7 @@ app.get('/', (req, res) => {
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'PollyGrace15515!',
+    password: process.env.SQL_PASSWORD,
     database: 'music_app'
 });
 
@@ -69,5 +74,5 @@ app.post('/login', (req, res) => {
 
 // Start the server
 app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
+    console.log(`Server is running on http://localhost:${process.env.SERVER_PORT}`);
 });
