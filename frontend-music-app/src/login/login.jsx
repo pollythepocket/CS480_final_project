@@ -1,6 +1,8 @@
 // import "./login.css"
 import { useContext, useState } from "react";
 import { endpointContext } from "../endpoints";
+import "./login.css"
+
 export default function Login() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -40,17 +42,21 @@ export default function Login() {
                 <button type="submit">Register</button>
             </form>
 
+            <hr /> 
+
             <form id="loginForm" onSubmit={handleLogin}>
                 <h2>Login</h2>
                 <input type="text" id="loginUsername" placeholder="Username" required />
                 <input type="password" id="loginPassword" placeholder="Password" required />
                 <button type="submit">Login</button>
-            </form>
+            </form>   
+            
+            <hr /> 
 
-            <div>
-              {isAdmin ? "Siging in as Admin" : "Signing in as Client"}
+            <div style={{padding: 20, color: "black"}}>
+              {isAdmin ? "Signing in as Admin" : "Signing in as Client"}
             </div>
-            <button onClick={() => setIsAdmin(!isAdmin)}>
+            <button style = {{width: "40%"}} onClick={() => setIsAdmin(!isAdmin)}>
               {isAdmin ? "Sign in as client" : "Sign in as Admin"}
             </button>
         </div>
