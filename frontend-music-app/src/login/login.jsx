@@ -4,11 +4,12 @@ import { endpointContext } from "../endpoints";
 export default function Login() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [isAdmin, setIsAdmin] = useState(false)
   const {registerUser} = useContext(endpointContext)
 
   const handleRegisterSubmit = (e) => {
     e.preventDefault()
-    registerUser(username, password);
+    registerUser(username, password, isAdmin);
   }
 
   const handleLogin = (e) => {
@@ -45,6 +46,13 @@ export default function Login() {
                 <input type="password" id="loginPassword" placeholder="Password" required />
                 <button type="submit">Login</button>
             </form>
+
+            <div>
+              {isAdmin ? "Siging in as Admin" : "Signing in as Client"}
+            </div>
+            <button onClick={() => setIsAdmin(!isAdmin)}>
+              {isAdmin ? "Sign in as client" : "Sign in as Admin"}
+            </button>
         </div>
       </div>
     </div>

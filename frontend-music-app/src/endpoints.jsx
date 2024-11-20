@@ -6,12 +6,12 @@ export const endpointContext = createContext();
 
 export default function EndpointContextProvider( {children} ) {
   
-  const registerUser = (username, password) => {
+  const registerUser = (username, password, isAdmin) => {
 
     fetch('/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password, isAdmin })
     })
     .then(response => response.text())
     .then(data => alert(data))
