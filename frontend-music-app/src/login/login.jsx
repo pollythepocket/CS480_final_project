@@ -56,7 +56,7 @@ export default function Login() {
             <div style={{padding: 20, color: "black"}}>
               {isAdmin ? "Signing in as Admin" : "Signing in as Client"}
             </div>
-            <button onClick={() => setIsAdmin(!isAdmin)}>
+            <button style = {{width: "40%"}} onClick={() => setIsAdmin(!isAdmin)}>
               {isAdmin ? "Sign in as client" : "Sign in as Admin"}
             </button>
         </div>
