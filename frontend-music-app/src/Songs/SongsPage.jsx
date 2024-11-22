@@ -17,13 +17,13 @@ export default function SongsPage() {
     <div className="song-page">
       <h1>Songs</h1>
       <div className="all-songs">
-        <table>
+        <table className="all-songs-table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Artist</th>
-              <th>Duration</th>
-              <th>Albumn</th>
+              <th className="col name">Name</th>
+              <th className="col artist">Artist</th>
+              <th className="col duration">Duration</th>
+              <th className="col albumn">Albumn</th>
             </tr>
           </thead>
           <tbody>
