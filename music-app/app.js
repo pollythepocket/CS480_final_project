@@ -4,12 +4,14 @@ const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cors = require('cors');
 
 // //imports environment variables from .env or .env.local file
 // dotenv.config({ path: ".env.local" });
 
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -37,7 +39,7 @@ db.connect((err) => {
 // Register a new user
 app.post('/register', (req, res) => {
     const { username, password } = req.body;
-
+    console.log("REGISTERING")
     // Hash the password before storing it
     const hashedPassword = bcrypt.hashSync(password, 10);
 
@@ -73,6 +75,6 @@ app.post('/login', (req, res) => {
 });
 
 // Start the server
-app.listen(3000, () => {
+app.listen(process.env.SERVER_PORT, () => {
     console.log(`Server is running on http://localhost:${process.env.SERVER_PORT}`);
 });

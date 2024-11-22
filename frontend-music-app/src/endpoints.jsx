@@ -8,7 +8,7 @@ export default function EndpointContextProvider( {children} ) {
   
   const registerUser = (username, password, isAdmin) => {
 
-    fetch('/register', {
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password, isAdmin })
