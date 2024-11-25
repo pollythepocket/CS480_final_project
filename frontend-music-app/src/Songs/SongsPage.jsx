@@ -1,3 +1,4 @@
+import Search from "../components/search";
 import SongEntry from "./SongEntry";
 import "./songs.css"
 export default function SongsPage() {
@@ -5,7 +6,7 @@ export default function SongsPage() {
     name: "Katamari",
     artist: "Femtanyl",
     duration: "a short time",
-    albumn: "Chaser",
+    album: "Chaser",
   };
   let exampleSongList = [
     exampleSong,
@@ -16,6 +17,7 @@ export default function SongsPage() {
   return (
     <div className="song-page">
       <h1>Songs</h1>
+      <Search />
       <div className="all-songs">
         <table className="all-songs-table">
           <thead>
@@ -23,7 +25,7 @@ export default function SongsPage() {
               <th className="col name">Name</th>
               <th className="col artist">Artist</th>
               <th className="col duration">Duration</th>
-              <th className="col albumn">Albumn</th>
+              <th className="col albumn">Album</th>
             </tr>
           </thead>
           <tbody>
