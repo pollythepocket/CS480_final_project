@@ -1,10 +1,12 @@
 
 
 import { createContext } from 'react'
+import { useNavigate } from 'react-router';
 
 export const endpointContext = createContext();
 
 export default function EndpointContextProvider( {children} ) {
+  const navigate = useNavigate();
   
   const registerUser = (username, password, isAdmin) => {
 
@@ -14,7 +16,7 @@ export default function EndpointContextProvider( {children} ) {
         body: JSON.stringify({ username, password, isAdmin })
     })
     .then(response => response.text())
-    .then(data => alert(data))
+    .then(data => {alert(data); navigate("/songs", { replace: true })})
     .catch(error => console.error('Error:', error));
   }
 

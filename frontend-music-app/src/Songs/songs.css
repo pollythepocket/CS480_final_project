@@ -1,0 +1,31 @@
+.all-songs {
+  padding: 20px;
+  background-color: #ebcbf4;
+  color: black;
+}
+
+.all-songs-table {
+  margin: auto;
+  min-width: 600px;
+}
+
+.entry-row td {
+  padding: 5px;
+}
+
+.col {
+  /* border-right: black solid 1px; */
+  margin: -5px;
+}
+
+table {
+  gap: 0;
+  row-gap: 0;
+}
+
+tbody tr:nth-of-type(odd) {
+  background-color: #F4E6F0;
+}
+tbody tr:nth-of-type(even) {
+  background-color: #E2AEDD;
+}
