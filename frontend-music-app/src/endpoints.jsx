@@ -3,6 +3,7 @@
 import { createContext } from 'react'
 import { useNavigate } from 'react-router';
 
+
 export const endpointContext = createContext();
 
 export default function EndpointContextProvider( {children} ) {
@@ -18,7 +19,7 @@ export default function EndpointContextProvider( {children} ) {
     .then(response => response.text())
     .then(data => {alert(data); if(!data.includes('Duplicate entry')){navigate("/songs", { replace: true })}})
     .catch(error => {console.error('Error:', error)});
-  }
+  };
 
   const loginUser = (username, password, isAdmin) => {
     fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/login`, {
@@ -29,10 +30,24 @@ export default function EndpointContextProvider( {children} ) {
     .then(response => response.text())
     .then(data => {alert(data); if(!data.includes('password')){navigate("/songs", { replace: true })}})
     .catch(error => console.error('Error:', error));
-  }
+  };
+
+  const getAllSongs = () => {
+    return fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/getAllSongs`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      });
+  };
+
 
   return (
-    <endpointContext.Provider value={{registerUser, loginUser}}>
+    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs}}>
       {children}
     </endpointContext.Provider>
   )

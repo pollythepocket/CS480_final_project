@@ -1,13 +1,13 @@
 import React from "react";
 
-export default function SongEntry({song}) {
-  const {name, artist, duration, album} = song
+export default function SongEntry({ song }) {
   return (
-    <tr className="entry-row">
-      <td className="col name">{name}</td>
-      <td className="col artist">{artist}</td>
-      <td className="col duration">{duration}</td>
-      <td className="col albumn">{album}</td>
+    <tr>
+      <td>{song.song_name}</td>
+      <td>{song.artist_name}</td>
+      <td>{song.duration}</td>
+      <td>{song.album_name}</td>
     </tr>
   );
 }
+
