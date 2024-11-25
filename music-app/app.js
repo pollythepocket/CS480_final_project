@@ -61,28 +61,13 @@ app.post('/register', (req, res) => {
     });
 });
 
-//TODO: TRY TO LOG IN AN ADMIN FIRST AND IF NOT WORK, THEN USER!!
 // Login user
 app.post('/login', (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, isAdmin} = req.body;
 
-    const checkClientQuery = 'SELECT * FROM Clients WHERE username = ?';
-    const checkAdminQuery = 'SELECT * FROM Admins WHERE username = ?';
+    if(isAdmin){
+        const checkAdminQuery = 'SELECT * FROM Admins WHERE username = ?';
 
-    // First, check the Clients table
-    db.query(checkClientQuery, [username], (err, clientResults) => {
-        if (err) throw err;
-
-        if (clientResults.length > 0) {
-            const user = clientResults[0];
-            if (bcrypt.compareSync(password, user.password)) {
-                return res.send('Client login successful!');
-            } else {
-                return res.status(400).send('Incorrect password');
-            }
-        }
-
-        // If not found in Clients, check the Admins table
         db.query(checkAdminQuery, [username], (err, adminResults) => {
             if (err) throw err;
 
@@ -98,7 +83,25 @@ app.post('/login', (req, res) => {
             // If not found in either table
             return res.status(400).send('User not found');
         });
-    });
+    }
+    else if(!isAdmin){
+        const checkClientQuery = 'SELECT * FROM Clients WHERE username = ?';
+        db.query(checkClientQuery, [username], (err, clientResults) => {
+            if (err) throw err;
+
+            if (clientResults.length > 0) {
+                const user = clientResults[0];
+                if (bcrypt.compareSync(password, user.password)) {
+                    return res.send('Client login successful!');
+                } else {
+                    return res.status(400).send('Incorrect password');
+                }
+            }
+        });
+    }
+    else{
+        return res.status(400).send('User not found');  
+    }
 });
 
 
