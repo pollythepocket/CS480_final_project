@@ -6,11 +6,11 @@
 
 .all-songs-table {
   margin: auto;
-  min-width: 600px;
+  min-width: 90%;
 }
 
 .entry-row td {
-  padding: 5px;
+  padding: 10px;
 }
 
 .col {
@@ -28,4 +28,13 @@ tbody tr:nth-of-type(odd) {
 }
 tbody tr:nth-of-type(even) {
   background-color: #E2AEDD;
+}
+
+td{
+  padding: 20px;
+}
+
+.table-container {
+  max-height: 400px; 
+  overflow-y: auto; 
 }

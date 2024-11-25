@@ -104,6 +104,24 @@ app.post('/login', (req, res) => {
     }
 });
 
+//grabbing the songs
+app.post('/getAllSongs', (req, res) => {
+    const getSongQuery = 'SELECT * FROM Songs';
+    db.query(getSongQuery, [], (err, songResults) => {
+        if (err) {
+            console.error('Error fetching songs:', err);
+            return res.status(500).send('An error occurred while fetching songs.');
+        }
+
+        if (songResults.length > 0) {
+            return res.json(songResults);
+        } else {
+            return res.status(404).send('No songs found.');
+        }
+    });
+});
+
+
 
 // Start the server
 app.listen(process.env.SERVER_PORT, () => {
