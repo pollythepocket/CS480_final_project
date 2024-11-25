@@ -7,27 +7,21 @@ export default function Login() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [isAdmin, setIsAdmin] = useState(false)
-  const {registerUser} = useContext(endpointContext)
+  const { registerUser, loginUser } = useContext(endpointContext);
+
 
   const handleRegisterSubmit = (e) => {
     e.preventDefault()
     registerUser(username, password, isAdmin);
   }
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLoginSubmit = (e) => {
 
     const username = document.getElementById('loginUsername').value;
     const password = document.getElementById('loginPassword').value;
 
-    fetch('/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-    })
-    .then(response => response.text())
-    .then(data => alert(data))
-    .catch(error => console.error('Error:', error));
+    e.preventDefault();
+    loginUser(username, password, isAdmin);
   }
 
 
@@ -44,7 +38,7 @@ export default function Login() {
 
             <hr /> 
 
-            <form id="loginForm" onSubmit={handleLogin}>
+            <form id="loginForm" onSubmit={handleLoginSubmit}>
                 <h2>Login</h2>
                 <input type="text" id="loginUsername" placeholder="Username" required />
                 <input type="password" id="loginPassword" placeholder="Password" required />
