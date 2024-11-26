@@ -17,7 +17,7 @@ export default function EndpointContextProvider( {children} ) {
         body: JSON.stringify({ username, password, isAdmin })
     })
     .then(response => response.text())
-    .then(data => {alert(data); if(!data.includes('Duplicate entry')){navigate("/songs", { replace: true })}})
+    .then(data => {alert(data); if(!data.includes('Duplicate entry')){navigate("/songs", {state: username })}})
     .catch(error => {console.error('Error:', error)});
   };
 
@@ -28,7 +28,7 @@ export default function EndpointContextProvider( {children} ) {
       body: JSON.stringify({ username, password, isAdmin })
   })
     .then(response => response.text())
-    .then(data => {alert(data); if(!data.includes('password')){navigate("/songs", { replace: true })}})
+    .then(data => {alert(data); if(!data.includes('password')){navigate("/songs", {state: username })}})
     .catch(error => console.error('Error:', error));
   };
 
@@ -45,9 +45,39 @@ export default function EndpointContextProvider( {children} ) {
       });
   };
 
+  const getLikedSongs = (username) => {
+    return fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/getLikedSongs`, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify({ username }) 
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    });
+};
+
+
+  const addLikedSong = (song_id, username) => {
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/addLikedSong`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ song_id, username }),
+    })
+      .then((response) => response.text())
+      .then((data) => alert(data))
+      .catch((error) => console.error('Error:', error));
+  };
+  
+
+
 
   return (
-    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs}}>
+    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong}}>
       {children}
     </endpointContext.Provider>
   )

@@ -1,12 +1,17 @@
+
 .all-songs {
   padding: 20px;
   background-color: #ebcbf4;
   color: black;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .all-songs-table {
   margin: auto;
-  min-width: 90%;
+  
+  border-collapse: collapse;
+  width: 70%;
 }
 
 .entry-row td {
@@ -30,11 +35,34 @@ tbody tr:nth-of-type(even) {
   background-color: #E2AEDD;
 }
 
-td{
-  padding: 20px;
+td {
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
 }
 
 .table-container {
-  max-height: 400px; 
-  overflow-y: auto; 
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.toolbar{
+  display: inline-flex;
+  width: 100%;
+  height: 50px; 
+  padding: 5px 10px;
+  font-size: 14px; 
+}
+
+.taskbar-button{
+  width: fit-content;
+  font-size: large;
+  margin: 50px;
+  padding: 10px;
+  height: fit-content;
+}
+
+.taskbar-button:hover{
+  background-color: #3f143d;
 }
