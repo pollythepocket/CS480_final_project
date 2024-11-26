@@ -1,21 +1,20 @@
 import React, { useContext, useState, useEffect } from "react";
 import Search from "../components/search";
-import SongEntry from "./SongEntry";
-import "./songs.css";
+import LikedSongEntry from "./likedSongEntry";
+import "./likedSongs.css";
 import { endpointContext } from "../endpoints";
 import { Toolbar } from 'primereact/toolbar';
 import { useNavigate } from "react-router";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 
-export default function SongsPage() {
-  const { getAllSongs } = useContext(endpointContext);
+export default function LikedSongs() {
+  const { getLikedSongs } = useContext(endpointContext);
   const [songs, setSongs] = useState([]);
   const [error, setError] = useState(null);
 
   let navigate = useNavigate();
   const location = useLocation();
   const username = location.state;
-  console.log(username);
 
   const routeChange = () => {
     let path = '/songs';
@@ -28,13 +27,13 @@ export default function SongsPage() {
   } 
 
   useEffect(() => {
-    getAllSongs()
+    getLikedSongs(username)
       .then((fetchedSongs) => {
-        console.log(fetchedSongs); 
         setSongs(fetchedSongs);
       })
       .catch((err) => setError(err.message));
-  }, [getAllSongs]);
+  }, [getLikedSongs, username]); 
+  
   
 
   return (
@@ -46,7 +45,7 @@ export default function SongsPage() {
           <button type="submit" className="taskbar-button" onClick={routeChangeToLikedList}>Liked Songs</button>
         } />
       </>
-      <h1>Songs</h1>
+      <h1>{username}'s Songs</h1>
       <Search />
       {error && <p className="error-message">Error: {error}</p>}
       <div className="all-songs">
@@ -58,12 +57,11 @@ export default function SongsPage() {
                 <th className="col artist">Artist</th>
                 <th className="col duration">Duration</th>
                 <th className="col album">Album</th>
-                <th className="col add" style={{ width: '30px' }}>Add</th>
               </tr>
             </thead>
             <tbody>
               {songs.length > 0 ? (
-                songs.map((song) => <SongEntry key={song.song_id} song={song} username={username} />)
+                songs.map((song) => <LikedSongEntry key={song.song_id} song={song} />)
               ) : (
                 <tr>
                   <td colSpan="4">No songs available</td>

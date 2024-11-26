@@ -3,8 +3,7 @@ CREATE DATABASE music_app;
 USE music_app;
 
 CREATE TABLE Clients (
-    client_id INT AUTO_INCREMENT PRIMARY KEY, -- auto increments so we don't have to assign
-    username VARCHAR(50) UNIQUE NOT NULL,    -- must be a unique name or won't be inserted
+    username VARCHAR(50) PRIMARY KEY,    -- must be a unique name or won't be inserted
     password VARCHAR(128) NOT NULL,          -- reduced length; 128 fits most hash algorithms
     email VARCHAR(50) DEFAULT NULL,          -- email is optional for now
     has_artist_permission BOOLEAN DEFAULT FALSE -- boolean for better clarity
@@ -16,15 +15,6 @@ CREATE TABLE Admins(
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(1000) NOT NULL,
     email VARCHAR(50) DEFAULT NULL
-);
-
--- a many-to-many relationship between admins and clients
-CREATE Table Manages(
-    client_id INT NOT NULL,
-    admin_id INT NOT NULL,
-    PRIMARY KEY (client_id, admin_id),
-    Foreign Key (client_id) REFERENCES Clients(client_id),
-    Foreign Key (admin_id) REFERENCES Admins(admin_id)
 );
 
 CREATE Table Artists(
@@ -52,10 +42,10 @@ CREATE Table Songs(
 
 CREATE Table Liked_Songs(
     song_id INT,
-    client_id INT,
-    PRIMARY KEY (client_id, song_id),
+    username VARCHAR(50),
+    PRIMARY KEY (username, song_id),
     Foreign Key (song_id) REFERENCES Songs(song_id),
-    Foreign Key (client_id) REFERENCES Clients(client_id)
+    Foreign Key (username) REFERENCES Clients(username)
 );
 
 -- TODO: insert artists, then albums, then songs!!
