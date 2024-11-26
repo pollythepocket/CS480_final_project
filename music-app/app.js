@@ -36,7 +36,12 @@ db.connect((err) => {
     console.log('Connected to MySQL');
 });
 
-// Register a new user
+/**
+@route /register
+@request {username, password, isAdmin}
+@response {message: "Registration Is Successful"}
+@desc Will create a new client
+*/
 app.post('/register', (req, res) => {
     const { username, password, isAdmin } = req.body;
     console.log("Registering user:", username, "Is Admin:", isAdmin);
@@ -61,9 +66,19 @@ app.post('/register', (req, res) => {
     });
 });
 
+/**
+@route /login
+@request {username, password}
+@response {
+            data: [{client_id, username, password, email, has_artist_permission}], 
+            message: "Login Successful"
+           }
+@desc Will check if a client exists
+*/
 // Login user
 app.post('/login', (req, res) => {
     const { username, password, isAdmin} = req.body;
+    const adminResults = [];
 
     if(isAdmin){
         const checkAdminQuery = 'SELECT * FROM Admins WHERE username = ?';
@@ -92,7 +107,11 @@ app.post('/login', (req, res) => {
             if (clientResults.length > 0) {
                 const user = clientResults[0];
                 if (bcrypt.compareSync(password, user.password)) {
-                    return res.send('Client login successful!');
+                    return res.status(200).json({
+                        message: "Client login successsful!",
+                        data: user,
+                    });
+                    // return res.send('Client login successful!');
                 } else {
                     return res.status(400).send('Incorrect password');
                 }
@@ -104,38 +123,176 @@ app.post('/login', (req, res) => {
     }
 });
 
-//grabbing the songs
-app.post('/getAllSongs', (req, res) => {
-    const getSongQuery = 'SELECT * FROM Songs';
-    db.query(getSongQuery, [], (err, songResults) => {
+
+
+/**
+ * @route /songs
+ *        /songs?column=song_name&sort=desc
+ *        /songs?name=<string>
+ * @request optional parameters {sort, column, name}. 
+ * @sort Valid parameters for sort are {asc, desc}.
+ * @column parameters for column are {song_name, artist_name, album_name}
+ * @name is the name of the song you want to look for
+ * @response List of songs in the order specified: see below
+ * [
+ * ...
+ * { song_id 
+ *   song_name 
+ *   artist_name
+ *   album_name
+ *   duration
+ * }....
+ * ]
+ * @desc List of songs in the order specified
+ */
+app.get('/songs', (req, res) => {
+    const sort = req.query.sort;
+    const column = req.query.column;
+    const name = req.query.name;
+
+    const validOption = ['asc', 'desc'];
+    const order = validOption.includes(sort?.toLowerCase()) ? sort.toUpperCase() : 'ASC';
+    const results = [];
+
+    const validColumn = ['song_name', 'artist_name', 'album_name'];
+    const sortColumn = validColumn.includes(column) ? column : 'song_name';
+
+    const searchName = name != null ? `%${name}%` : "%"; 
+
+    const query = `SELECT * FROM Songs WHERE ${sortColumn} IS NOT NULL AND song_name LIKE "${searchName}" ORDER BY ${sortColumn} ${order}`;
+    db.query(query,(err, results) => {
         if (err) {
             console.error('Error fetching songs:', err);
             return res.status(500).send('An error occurred while fetching songs.');
         }
-
-        if (songResults.length > 0) {
-            return res.json(songResults);
-        } else {
-            return res.status(404).send('No songs found.');
-        }
-    });
+        
+        res.status(200).json({
+            data: results,
+            message: "Retrieved songs!"
+        });
+    })
 });
 
-//grabbing user's liked songs
-app.post('/getLikedSongs', (req, res) => {
+/**
+ * @route /albums
+ *        /albums?column=<column option>>&sort=<sort option>
+ *        /albums?name=<name>
+ * @request optional parameters {sort, column}. 
+ * @sort_option Valid parameters for sort are {asc, desc}.
+ * @column_option parameters for column are {album_name, artist_name, duration, number_of_songs}
+ * @name is the name of the album you want
+ * @response List of albums in the order specified: see below
+ * [
+ * ...
+ * { album_name, artist_name, duration, number_of_songs, album_image_url }
+ * ...
+ * ]
+ * @desc List of albums in the order specified
+ */
+app.get('/albums', (req, res) => {
+    const sort = req.query.sort;
+    const column = req.query.column;
+    const name = req.query.name;
+
+    const validOption = ['asc', 'desc'];
+    const order = validOption.includes(sort?.toLowerCase()) ? sort.toUpperCase() : 'ASC';
+
+    const validColumn = ['album_name', 'artist_name', 'duration', 'number_of_songs'];
+    const sortColumn = validColumn.includes(column) ? column : 'album_name';
+
+    const searchName = name != null ? `%${name}%` : "%"; 
+    const results = [];
+    const query = `SELECT * FROM Albums WHERE ${sortColumn} IS NOT NULL AND album_name LIKE "${searchName}" ORDER BY ${sortColumn} ${order}`;
+    db.query(query,(err, results) => {
+        if (err) {
+            console.error('Error fetching albums:', err);
+            return res.status(500).send('An error occurred while fetching albums.');
+        }
+        res.status(200).json({
+            // query: query,
+            data: results,
+            message: `Retrieved albums with ${sort} and ${sortColumn}!`
+        });
+    })
+});
+
+/**
+ * @route /artists
+ *        /artists?sort=<sort option>
+ *        /artists?name=<name>
+ * @request optional parameters {sort, column}. 
+ * @sort_option Valid parameters for sort are {asc, desc}.
+ * @name is the name of the artists you want
+ * @response List of artists in the order specified: see below
+ * [
+ * ...
+ * {artist_name}
+ * ...
+ * ]
+ * @desc List of albums in the order specified
+ */
+app.get('/artists', (req, res) => {
+    const sort = req.query.sort;
+    const name = req.query.name;
+
+    const validOption = ['asc', 'desc'];
+    const order = validOption.includes(sort?.toLowerCase()) ? sort.toUpperCase() : 'ASC';
+
+    const searchName = name != null ? `%${name}%` : "%"; 
+    const results = [];
+    const query = `SELECT * FROM Artists WHERE artist_name LIKE "${searchName}" ORDER BY artist_name ${order}`;
+    db.query(query,(err, results) => {
+        if (err) {
+            console.error('Error fetching artists:', err);
+            return res.status(500).send('An error occurred while fetching artists.');
+        }
+        res.status(200).json({
+            data: results,
+            message: `Retrieved albums with ${sort}!`
+        });
+    })
+});
+
+/**
+ * @route /add-to-favorites
+ * @request {client_id, song_id}
+ * @response Show updated number of favorite songs
+ * @desc Will add a new song to the liked list of songs for that client
+ */
+app.post('/add-to-favorites', (req, res) => {
+    const {client_id, song_id} = req.body;
+
+    const query = `INSERT INTO Liked_Songs(client_id, song_id) VALUES (${client_id}, ${song_id})`;
+    const results = [];
+    db.query(query, [client_id, song_id], (err, results) => {
+        if (err) {
+            console.error('Error adding liked songs:', err);
+            return res.status(500).send('An error occurred while adding a new liked song.');
+        }
+        res.status(200).json({
+            message: `Added New Favorite Song!`
+        });
+    })
+});
+
+
+// SEARCH FOR FAVORITE SONGS
+// expects the client id, returns a list of all liked songs
+app.get('/favorite-songs', (req, res) => {
+    // how do I save the id of the specific user that we have.
     const { username } = req.body;
-    const getLikedSongs = 'SELECT * FROM Songs JOIN Liked_Songs ON Songs.song_id = Liked_Songs.song_id WHERE Liked_Songs.username = ?'
-    db.query(getLikedSongs, [username], (err, songResults) => {
+    const results = [];
+    query = 'SELECT * FROM Songs JOIN Liked_Songs ON Songs.song_id = Liked_Songs.song_id WHERE Liked_Songs.username = ?';
+    db.query(query, [client_id], (err, results) => {
         if (err) {
             console.error('Error fetching songs:', err);
             return res.status(500).send('An error occurred while fetching songs.');
-        }
+        };
 
-        if (songResults.length > 0) {
-            return res.json(songResults);
-        } else {
-            return res.status(404).send('No songs found.');
-        }
+        res.status(200).json({
+            data: results,
+            message: "Got all the liked songs!"
+        });
     });
 });
 
@@ -157,3 +314,6 @@ app.post('/addLikedSong', (req, res) => {
 app.listen(process.env.SERVER_PORT, () => {
     console.log(`Server is running on http://localhost:${process.env.SERVER_PORT}`);
 });
+
+
+module.exports = app;
