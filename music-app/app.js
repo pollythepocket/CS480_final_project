@@ -299,7 +299,7 @@ app.get('/favorite-songs', (req, res) => {
 //grabbing user's liked songs
 app.post('/getLikedSongs', (req, res) => {
     const { username } = req.body;
-    const getLikedSongs = 'SELECT * FROM Songs JOIN Liked_Songs ON Songs.song_id = Liked_Songs.song_id WHERE Liked_Songs.username = ?'
+    const getLikedSongs = 'SELECT * FROM Songs JOIN Liked_Songs ON Songs.song_id = Liked_Songs.song_id WHERE Liked_Songs.username = ? ORDER BY Songs.song_name ASC'
     db.query(getLikedSongs, [username], (err, songResults) => {
         if (err) {
             console.error('Error fetching songs:', err);
@@ -342,7 +342,7 @@ app.post('/addLikedSong', (req, res) => {
 
 
   app.post('/getAllSongs', (req, res) => {
-    const getSongQuery = 'SELECT * FROM Songs';
+    const getSongQuery = 'SELECT * FROM Songs ORDER BY song_name ASC';
     db.query(getSongQuery, [], (err, songResults) => {
         if (err) {
             console.error('Error fetching songs:', err);
