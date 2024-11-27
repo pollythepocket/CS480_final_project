@@ -319,18 +319,18 @@ describe('User API Tests', () => {
     expect(info.message).toBe("Got all the liked songs!");
   });
 
-  test('POST /liked_songs - add a new liked song', async () => {
+  test('POST /add_liked_songs - add a new liked song', async () => {
     const likeSong = {
       username: "emily",
       song_id: 3 // might need to change for the test to pass
     };
 
     const response = await request(app)
-      .post(`/liked_songs`)
+      .post(`/add_liked_songs`)
       .send(likeSong); 
 
     let info = response.body;
-    // console.log(info);
+    console.log(info);
 
     expect(response.status).toBe(200);
     expect(info.message).toBe("Added New Favorite Song!");
@@ -347,7 +347,7 @@ describe('User API Tests', () => {
       .send(likeSong); 
 
     let info = response.body;
-    console.log(info);
+    // console.log(info);
 
     expect(response.status).toBe(200);
     expect(info.message).toBe("Removed Song From Liked Songs!");

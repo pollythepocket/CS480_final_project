@@ -311,7 +311,7 @@ app.post('/artists', (req, res) => {
  *   message: "Got all the liked songs!"
  * }
  */
-app.post('/liked_songs', (req, res) => {
+app.get('/liked_songs', (req, res) => {
     const { username } = req.body;
 
     query = 'SELECT * FROM Songs JOIN Liked_Songs ON Songs.song_id = Liked_Songs.song_id WHERE Liked_Songs.username = ? ORDER BY Songs.song_name ASC';
@@ -363,7 +363,7 @@ app.post('/add_liked_songs', (req, res) => {
     const { song_id, username } = req.body;
 
 
-    const deleteSong = 'DELETE FROM Liked_Songs WHERE song_id = ?';
+    const deleteSong = 'DELETE FROM Liked_Songs WHERE song_id = ? AND username = ?';
   
     db.query(deleteSong, [song_id, username], (err) => {
         if (err) {
