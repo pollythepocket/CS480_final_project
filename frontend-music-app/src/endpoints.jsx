@@ -28,7 +28,7 @@ export default function EndpointContextProvider( {children} ) {
       body: JSON.stringify({ username, password, isAdmin })
   })
     .then(response => response.text())
-    .then(data => {alert(data); if(!data.includes('password')){navigate("/songs", {state: username })}})
+    .then(message => {alert(message); if(message.includes('success')){navigate("/songs", {state: username })}})
     .catch(error => console.error('Error:', error));
   };
 
@@ -72,12 +72,23 @@ export default function EndpointContextProvider( {children} ) {
       .then((data) => alert(data))
       .catch((error) => console.error('Error:', error));
   };
+
+  const deleteLikedSong = (song_id, username) => {
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/deleteLikedSong`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ song_id, username }),
+    })
+      .then((response) => {})
+      .then((data) => alert(data))
+      .catch((error) => console.error('Error:', error));
+  }
   
 
 
 
   return (
-    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong}}>
+    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong}}>
       {children}
     </endpointContext.Provider>
   )
