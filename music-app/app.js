@@ -326,6 +326,21 @@ app.post('/addLikedSong', (req, res) => {
     });
   });
 
+
+  app.post('/deleteLikedSong', (req, res) => {
+    const { song_id, username } = req.body;
+    const deleteSong = 'DELETE FROM Liked_Songs WHERE song_id= ?';
+  
+    db.query(deleteSong, [song_id, username], (err) => {
+      if (err) {
+        console.error('Error inserting liked song:', err);  // Logs detailed error
+        return res.status(500).send('Already deleted');
+      }
+    });
+  });
+
+
+
   app.post('/getAllSongs', (req, res) => {
     const getSongQuery = 'SELECT * FROM Songs';
     db.query(getSongQuery, [], (err, songResults) => {

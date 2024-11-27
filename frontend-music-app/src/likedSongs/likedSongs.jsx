@@ -10,6 +10,7 @@ import { useLocation } from "react-router";
 export default function LikedSongs() {
   const { getLikedSongs } = useContext(endpointContext);
   const [songs, setSongs] = useState([]);
+  const [filteredSongs, setFilteredSongs] = useState([]);
   const [error, setError] = useState(null);
 
   let navigate = useNavigate();
@@ -30,9 +31,18 @@ export default function LikedSongs() {
     getLikedSongs(username)
       .then((fetchedSongs) => {
         setSongs(fetchedSongs);
+        setFilteredSongs(fetchedSongs); 
       })
       .catch((err) => setError(err.message));
   }, [getLikedSongs, username]); 
+
+  const handleSearch = (query, option) => {
+    const lowerQuery = query.toLowerCase();
+    const filtered = songs.filter((song) =>
+      song[option]?.toLowerCase().includes(lowerQuery)
+    );
+    setFilteredSongs(filtered);
+  };
   
   
 
@@ -46,7 +56,7 @@ export default function LikedSongs() {
         } />
       </>
       <h1>{username}'s Songs</h1>
-      <Search />
+      <Search username={username} onSearch={handleSearch}/>
       {error && <p className="error-message">Error: {error}</p>}
       <div className="all-songs">
         <div className="table-container">
@@ -57,14 +67,15 @@ export default function LikedSongs() {
                 <th className="col artist">Artist</th>
                 <th className="col duration">Duration</th>
                 <th className="col album">Album</th>
+                <th className="col add" style={{ width: '30px' }}>Delete</th>
               </tr>
             </thead>
             <tbody>
-              {songs.length > 0 ? (
-                songs.map((song) => <LikedSongEntry key={song.song_id} song={song} />)
+              {filteredSongs.length > 0 ? (
+                filteredSongs.map((song) => <LikedSongEntry key={song.song_id} song={song} />)
               ) : (
                 <tr>
-                  <td colSpan="4">No songs available</td>
+                  <td colSpan="5">No songs available</td>
                 </tr>
               )}
             </tbody>
