@@ -28,60 +28,85 @@ export default function EndpointContextProvider( {children} ) {
       body: JSON.stringify({ username, password, isAdmin })
   })
     .then(response => response.text())
-    .then(message => {alert(message); if(message.includes('success')){navigate("/songs", {state: username })}})
+    .then(message => {if(message.includes('success')){navigate("/songs", {state: username })}})
     .catch(error => console.error('Error:', error));
   };
 
-  const getAllSongs = () => {
-    return fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/getAllSongs`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      });
-  };
+  const getAllSongs = async (query = '') => {
+    try {
+        const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}${query}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        });
 
-  const getLikedSongs = (username) => {
-    return fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/getLikedSongs`, {
-        method: 'POST',
-        headers: { 
-            'Content-Type': 'application/json' 
-        },
-        body: JSON.stringify({ username }) 
-    })
-    .then(response => {
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            const errorMessage = await response.text(); // Use server's error message
+            throw new Error(`Error fetching songs: ${errorMessage}`);
         }
-        return response.json();
-    });
+
+        const json = await response.json();
+        if (!json || !json.data) {
+            throw new Error('Invalid response structure');
+        }
+
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching songs:', error);
+        throw error; // Re-throw error for further handling
+    }
+};
+
+
+
+  const getLikedSongs = async(username) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/liked_songs`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username })
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      if (!json || !json.data) {
+          throw new Error('Invalid response structure');
+      }
+
+      return json.data;
+  } catch (error) {
+      console.error('Error fetching songs:', error);
+      throw error;
+  }
 };
 
 
   const addLikedSong = (song_id, username) => {
-    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/addLikedSong`, {
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/add_liked_songs`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ song_id, username }),
     })
       .then((response) => response.text())
-      .then((data) => alert(data))
-      .catch((error) => console.error('Error:', error));
+      .then((message) => {if(message.includes('Already')){
+          alert(message);
+      }})
+      .catch((error) => {console.error('Error:', error)});
   };
 
   const deleteLikedSong = (song_id, username) => {
-    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/deleteLikedSong`, {
-      method: 'POST',
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/liked_songs`, {
+      method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ song_id, username }),
+      body: JSON.stringify({ song_id, username }),  
     })
-      .then((response) => {})
-      .then((data) => alert(data))
+    
+      .then((response) => {response.text()})
+      .then((message) => {if(message.includes('Remove')) alert(message)})
       .catch((error) => console.error('Error:', error));
+    
   }
   
 

@@ -279,7 +279,7 @@ app.get('/artists', (req, res) => {
  *   message: "Got all the liked songs!"
  * }
  */
-app.get('/liked_songs', (req, res) => {
+app.post('/liked_songs', (req, res) => {
     const { username } = req.body;
 
     query = 'SELECT * FROM Songs JOIN Liked_Songs ON Songs.song_id = Liked_Songs.song_id WHERE Liked_Songs.username = ? ORDER BY Songs.song_name ASC';
@@ -304,14 +304,16 @@ app.get('/liked_songs', (req, res) => {
  * @response Will add a new liked song to the liked songs table
  * @desc Returns back json object { message }
  */
-app.post('/liked_songs', (req, res) => {
+app.post('/add_liked_songs', (req, res) => {
     const {song_id, username} = req.body;
 
     const query = `INSERT INTO Liked_Songs(song_id, username) VALUES (?, ?)`;
     db.query(query, [song_id, username],(err, result) => {
         if (err) {
             console.error('Error adding liked songs:', err);
-            return res.status(500).send("Already Added!");
+            return res.status(200).json({
+                message: `Already Added!`
+            });
         }
         res.status(200).json({
             message: `Added New Favorite Song!`
@@ -328,12 +330,15 @@ app.post('/liked_songs', (req, res) => {
   app.delete('/liked_songs', (req, res) => {
     const { song_id, username } = req.body;
 
-    const deleteSong = 'DELETE FROM Liked_Songs WHERE song_id = ? AND username = ?';
+
+    const deleteSong = 'DELETE FROM Liked_Songs WHERE song_id = ?';
   
     db.query(deleteSong, [song_id, username], (err) => {
         if (err) {
-            console.error('Error inserting liked song:', err);  // Logs detailed error
-            return res.status(500).send('Already deleted');
+            console.error('Error inserting liked song:', err); 
+            return res.status(200).json({
+                message: `Already Deleted!`
+            });
         }
         res.status(200).json({
             message: "Removed Song From Liked Songs!"

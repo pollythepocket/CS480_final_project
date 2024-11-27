@@ -43,7 +43,7 @@ CREATE Table Songs(
 CREATE Table Liked_Songs(
     song_id INT,
     username VARCHAR(50),
-    PRIMARY KEY (username, song_id),
+    PRIMARY KEY (song_id, username),
     Foreign Key (song_id) REFERENCES Songs(song_id),
     Foreign Key (username) REFERENCES Clients(username)
 );
