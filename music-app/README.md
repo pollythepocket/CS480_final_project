@@ -13,3 +13,4 @@
 4.Run the node server in music-app
 `node app.js`
 
+For examples on how to use the endpoints listed in app.js, you can look at __tests__ to find some working examples. 
