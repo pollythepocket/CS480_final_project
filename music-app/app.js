@@ -79,7 +79,7 @@ app.post('/register', (req, res) => {
 app.post('/login', (req, res) => {
     const { username, password, isAdmin} = req.body;
     const adminResults = [];
-
+    console.log("login>", username)
     if(isAdmin){
         const checkAdminQuery = 'SELECT * FROM Admins WHERE username = ?';
 
@@ -105,6 +105,7 @@ app.post('/login', (req, res) => {
             if (err) throw err;
 
             if (clientResults.length > 0) {
+                // console.log("Found user")
                 const user = clientResults[0];
                 if (bcrypt.compareSync(password, user.password)) {
                     return res.status(200).json({
@@ -118,9 +119,8 @@ app.post('/login', (req, res) => {
             }
         });
     }
-    else{
-        return res.status(400).send('User not found');  
-    }
+    console.log("Failed to find user")
+    return res.status(400).send('User not found');  
 });
 
 
