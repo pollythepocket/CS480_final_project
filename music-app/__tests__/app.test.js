@@ -83,10 +83,9 @@ describe('User API Tests', () => {
     const songList = info.map(item => ({
       song_id: item.song_id, 
       song_name: item.song_name, 
-      artist_name: item.song_name,
+      artist_name: item.artist_name,
       album_name: item.album_name,
       duration: item.duration
-
     }));
     // console.log(songList[0]);
 
@@ -102,10 +101,9 @@ describe('User API Tests', () => {
     const songList = info.map(item => ({
       song_id: item.song_id, 
       song_name: item.song_name, 
-      artist_name: item.song_name,
+      artist_name: item.artist_name,
       album_name: item.album_name,
       duration: item.duration
-
     }));
     // console.log(songList[0]);
 
@@ -121,10 +119,9 @@ describe('User API Tests', () => {
     const songList = info.map(item => ({
       song_id: item.song_id, 
       song_name: item.song_name, 
-      artist_name: item.song_name,
+      artist_name: item.artist_name,
       album_name: item.album_name,
       duration: item.duration
-
     }));
     // console.log(songList[0]);
 
@@ -140,10 +137,9 @@ describe('User API Tests', () => {
     const songList = info.map(item => ({
       song_id: item.song_id, 
       song_name: item.song_name, 
-      artist_name: item.song_name,
+      artist_name: item.artist_name,
       album_name: item.album_name,
       duration: item.duration
-
     }));
     // console.log(response.body.query);
 
@@ -151,7 +147,7 @@ describe('User API Tests', () => {
     expect(songList[0].album_name).toBe("A Night At The Opera");
   });
 
-  test('GET /songs - Test Search for Song', async () => {
+  test('GET /songs - Test Search for Song By Song_Name', async () => {
     const response = await request(app)
       .get(`/songs?column=artist_name&sort=asc&name=Like Hi`); 
 
@@ -159,15 +155,34 @@ describe('User API Tests', () => {
     const songList = info.map(item => ({
       song_id: item.song_id, 
       song_name: item.song_name, 
-      artist_name: item.song_name,
+      artist_name: item.artist_name,
       album_name: item.album_name,
       duration: item.duration
-
     }));
     // console.log(response.body.query);
 
     expect(response.status).toBe(200);
     expect(songList[0].song_id).toBe(12);
+  });
+
+  test('GET /songs - Test Search for Song By Artist_Name', async () => {
+    const response = await request(app)
+      .get(`/songs?name=Tyler&search=artist_name`); 
+
+    let info = response.body.data;
+    const songList = info.map(item => ({
+      song_id: item.song_id, 
+      song_name: item.song_name, 
+      artist_name: item.artist_name,
+      album_name: item.album_name,
+      duration: item.duration
+
+    }));
+    // console.log(songList[0]);
+    // console.log(response.body.query);
+
+    expect(response.status).toBe(200);
+    expect(songList[0].artist_name).toBe("Tyler, The Creator");
   });
 
   test('GET /albums - Get All Albums', async () => {
@@ -231,6 +246,29 @@ describe('User API Tests', () => {
     expect(albumList[0].album_name).toBe("CHROMAKOPIA");
   });
 
+  test('GET /albums - Search by artist_name', async () => {
+    const response = await request(app)
+      .get(`/albums?name=Tyler&search=artist_name`); 
+
+    let info = response.body.data;
+    const albumList = info.map(item => ({
+      album_name: item.album_name, 
+      artist_name: item.artist_name, 
+      duration: item.duration,
+      number_of_songs: item.number_of_songs,
+      album_image_url: item.album_image_url
+
+    }));
+
+    // console.log(albumList[0]);
+    // console.log(response.body);
+    // console.log(response.body.message);
+    // console.log(response.body.query);
+
+    expect(response.status).toBe(200);
+    expect(albumList[0].album_name).toBe("CHROMAKOPIA");
+  });
+
   test('GET /artists - List Artists In the Order of Sort', async () => {
     const response = await request(app)
       .get(`/artists?sort=desc`); 
@@ -265,21 +303,54 @@ describe('User API Tests', () => {
     expect(albumList[0].artist_name).toBe("Tyler, The Creator");
   });
 
-  // test('POST /add-to-favorites - add a new song to favorites', async () => {
-  //   const likeSong = {
-  //     client_id: 1,
-  //     song_id: 2 // might need to change for the test to pass
-  //   };
+  test('GET /liked_songs - show all the liked songs', async () => {
+    const likeSong = {
+      username: 'emily',
+    };
 
-  //   const response = await request(app)
-  //     .post(`/add-to-favorites`)
-  //     .send(likeSong); 
+    const response = await request(app)
+      .get(`/liked_songs`)
+      .send(likeSong); 
 
-  //   let info = response.body;
-  //   console.log(info);
+    let info = response.body;
+    // console.log(info);
 
-  //   expect(response.status).toBe(200);
-  //   expect(info.message).toBe("Added New Favorite Song!");
-  // });
+    expect(response.status).toBe(200);
+    expect(info.message).toBe("Got all the liked songs!");
+  });
+
+  test('POST /liked_songs - add a new liked song', async () => {
+    const likeSong = {
+      username: "emily",
+      song_id: 3 // might need to change for the test to pass
+    };
+
+    const response = await request(app)
+      .post(`/liked_songs`)
+      .send(likeSong); 
+
+    let info = response.body;
+    // console.log(info);
+
+    expect(response.status).toBe(200);
+    expect(info.message).toBe("Added New Favorite Song!");
+  });
+
+  test('DELETE /liked_songs - delete a liked song', async () => {
+    const likeSong = {
+      username: "emily",
+      song_id: 3 // might need to change for the test to pass
+    };
+
+    const response = await request(app)
+      .delete(`/liked_songs`)
+      .send(likeSong); 
+
+    let info = response.body;
+    console.log(info);
+
+    expect(response.status).toBe(200);
+    expect(info.message).toBe("Removed Song From Liked Songs!");
+  });
 
 });
