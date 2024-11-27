@@ -260,11 +260,11 @@ app.get('/artists', (req, res) => {
  * @desc Will add a new song to the liked list of songs for that client
  */
 app.post('/add-to-favorites', (req, res) => {
-    const {client_id, song_id} = req.body;
+    const {song_id, username} = req.body;
 
-    const query = `INSERT INTO Liked_Songs(client_id, song_id) VALUES (${client_id}, ${song_id})`;
+    const query = `INSERT INTO Liked_Songs(song_id, username) VALUES (?, ?)`;
     const results = [];
-    db.query(query, [client_id, song_id], (err, results) => {
+    db.query(query, [song_id, username], (err, results) => {
         if (err) {
             console.error('Error adding liked songs:', err);
             return res.status(500).send('An error occurred while adding a new liked song.');
@@ -278,12 +278,12 @@ app.post('/add-to-favorites', (req, res) => {
 
 // SEARCH FOR FAVORITE SONGS
 // expects the client id, returns a list of all liked songs
-app.get('/favorite-songs', (req, res) => {
+app.post('/favorite-songs', (req, res) => {
     // how do I save the id of the specific user that we have.
     const { username } = req.body;
     const results = [];
     query = 'SELECT * FROM Songs JOIN Liked_Songs ON Songs.song_id = Liked_Songs.song_id WHERE Liked_Songs.username = ?';
-    db.query(query, [client_id], (err, results) => {
+    db.query(query, [username], (err, results) => {
         if (err) {
             console.error('Error fetching songs:', err);
             return res.status(500).send('An error occurred while fetching songs.');

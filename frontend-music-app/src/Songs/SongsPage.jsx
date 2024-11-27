@@ -17,22 +17,43 @@ export default function SongsPage() {
   const location = useLocation();
   const username = location.state;
 
-  useEffect(() => {
-    getAllSongs()
+  const defaultSearch = (e) => {
+    getAllSongs('/songs?sort=asc')
       .then((fetchedSongs) => {
-        setSongs(fetchedSongs);
         setFilteredSongs(fetchedSongs); 
       })
-      .catch((err) => setError(err.message));
-  }, [getAllSongs]);
+      .catch((err) => {
+        console.error('Error searching songs:', err); 
+        setError(err.message);
+      });
+  }
 
+  useEffect(() => {
+    defaultSearch();
+  }, []); 
+  
   const handleSearch = (query, option) => {
-    const lowerQuery = query.toLowerCase();
-    const filtered = songs.filter((song) =>
-      song[option]?.toLowerCase().includes(lowerQuery)
-    );
-    setFilteredSongs(filtered);
+    if (!query || !option) {
+      defaultSearch();
+      return;
+    }
+  
+    const stringQuery = `/songs?name=${query}&sort=asc`;
+
+    console.log(stringQuery);
+  
+    getAllSongs(stringQuery)
+      .then((fetchedSongs) => {
+        setFilteredSongs(fetchedSongs); 
+      })
+      .catch((err) => {
+        console.error('Error searching songs:', err); 
+        setError(err.message);
+      });
+  
+    console.log(`Searching for ${query} in ${option}`); 
   };
+  
 
   return (
     <div className="song-page">
