@@ -86,7 +86,12 @@ VALUES ('Tyler, The Creator'),
 ('Ty''s Music'),
 ('Nuvfr'),
 ('Xakei'),
-('Siggerr'); 
+('Siggerr'),
+('Femtanyl'),
+('Purity Filter'),
+('Golemm'),
+('Metaroom'),
+('Last Dinosaurs'); 
 
 INSERT INTO Albums(album_name, artist_name, duration, number_of_songs, album_image_url)
 VALUES ('CHROMAKOPIA', 'Tyler, The Creator', '53min', 14, 'album_covers\chromakopia.png'),
@@ -129,7 +134,10 @@ VALUES ('CHROMAKOPIA', 'Tyler, The Creator', '53min', 14, 'album_covers\chromako
 ('A Night At The Opera', 'Queen', '43min 4sec', 12, 'album_covers\A_Night_At_The_Opera.png'),
 ('Pet Sounds', 'The Beach Boys', '37min 21sec', 13, 'album_covers\pet_sounds.png'),
 ('Rebel Yell', 'Billy Idol', '38min 22sec', 9, 'album_covers\rebel_yell.png'),
-('Back To Black', 'Amy Winehouse', '34min 46sec', 11, 'album_covers\back_to_black.png');
+('Back To Black', 'Amy Winehouse', '34min 46sec', 11, 'album_covers\back_to_black.png'),
+('CHASER', 'Femtanyl', '13min 44sec', 6, 'album_covers\Chaser.jpg'),
+('SHRAPNEL FLUX: VEILED TERMINAL', 'Purity Filter', '11min 10sec', 6, "album_covers\SHRAPNEL_FLUX.jpg"),
+("Hazardous Bubble Basics", "Golemm", "15min 37sec", 8, "album_covers\Hazardous_Bubble_Basics.jpg");
 
 --Songs with Albums
 INSERT INTO Songs(song_name, artist_name, album_name, duration)
@@ -597,7 +605,28 @@ VALUES ('St. Chroma', 'Tyler, The Creator', 'CHROMAKOPIA', '3:17'),
 ('Wake Up Alone', 'Amy Winehouse', 'Back To Black', '3:41'),
 ('Some Unholy War', 'Amy Winehouse', 'Back To Black', '2:21'),
 ('He Can Only Hold Her', 'Amy Winehouse', 'Back To Black', '2:44'),
-('Addicted', 'Amy Winehouse', 'Back To Black', '3:33');
+('Addicted', 'Amy Winehouse', 'Back To Black', '3:33'),
+('ACT RIGHT', 'Femtanyl', 'CHASER', '2:24'),
+('P3T', 'Femtanyl', 'CHASER', '1:42'),
+('PUSH UR T3MPRR', 'Femtanyl', 'CHASER', '2:28'),
+('KATAMARI', 'Femtanyl', 'CHASER', '2:38'),
+('MURDER EVERY 1 U KNOW', 'Femtanyl', 'CHASER', '2:05'),
+('GIRL HELL 1999', 'Femtanyl', 'CHASER', '2:25'),
+("Remnant Syphon", "Purity Filter", "SHRAPNEL FLUX: VEILED TERMINAL", "1:23"),
+("Psionic Stasis Mask", "Purity Filter", "SHRAPNEL FLUX: VEILED TERMINAL", "2:08"),
+("Eden (Exclusion Zone)", "Purity Filter", "SHRAPNEL FLUX: VEILED TERMINAL", "1:06"),
+("Splinter Echo", "Purity Filter", "SHRAPNEL FLUX: VEILED TERMINAL", "2:51"),
+("Neverland Chakra", "Purity Filter", "SHRAPNEL FLUX: VEILED TERMINAL", "1:32"),
+("Crush Restore", "Purity Filter", "SHRAPNEL FLUX: VEILED TERMINAL", "2:08"),
+("Watch out for Golem.", "Golemm", "Hazardous Bubble Basics", "1:44"),
+("Felt Good", "Golemm", "Hazardous Bubble Basics", "2:09"),
+("Bliss", "Golemm", "Hazardous Bubble Basics", "1:50"),
+("Untouchable", "Golemm", "Hazardous Bubble Basics", "2:10"),
+("Spiritual Realm", "Golemm", "Hazardous Bubble Basics", "1:31"),
+("Villfarelse", "Golemm", "Hazardous Bubble Basics", "2:08"),
+("Polliwogs", "Golemm", "Hazardous Bubble Basics", "2:33"),
+("Ant Racing", "Golemm", "Hazardous Bubble Basics", "1:28");
+
 
 
 
@@ -614,4 +643,7 @@ VALUES ('Brutus (Instrumental)', 'The Buttress', NULL, '3:20'),
 ('Moon', 'Siggerr', NULL, '3:44'),
 ('Maple Leaf Rag', 'Scott Joplin', NULL, '3:20'),
 ('I Get Around', 'The Beach Boys', NULL, '2:14'),
-('Glide', 'Mitski', NULL, '3:41');
+('Glide', 'Mitski', NULL, '3:41'),
+('LOVESICK, CANNIBAL', 'Femtanyl', NULL, '1:56'),
+('DINNER!', 'Femtanyl', NULL, '2:16');
+
