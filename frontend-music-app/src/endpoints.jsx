@@ -60,7 +60,7 @@ export default function EndpointContextProvider( {children} ) {
 
   const getLikedSongs = async(username) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/favorite-songs`, {
+      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/liked_songs`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username })
@@ -84,25 +84,29 @@ export default function EndpointContextProvider( {children} ) {
 
 
   const addLikedSong = (song_id, username) => {
-    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/add-to-favorites`, {
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/add_liked_songs`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ song_id, username }),
     })
       .then((response) => response.text())
-      .then((data) => {})
-      .catch((error) => console.error('Error:', error));
+      .then((message) => {if(message.includes('Already')){
+          alert(message);
+      }})
+      .catch((error) => {console.error('Error:', error)});
   };
 
   const deleteLikedSong = (song_id, username) => {
-    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/deleteLikedSong`, {
-      method: 'POST',
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/liked_songs`, {
+      method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ song_id, username }),
+      body: JSON.stringify({ song_id, username }),  
     })
-      .then((response) => {})
-      .then((data) => alert(data))
+    
+      .then((response) => {response.text()})
+      .then((message) => {if(message.includes('Remove')) alert(message)})
       .catch((error) => console.error('Error:', error));
+    
   }
   
 

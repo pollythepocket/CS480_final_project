@@ -38,7 +38,7 @@ export default function SongsPage() {
       return;
     }
   
-    const stringQuery = `/songs?name=${query}&sort=asc`;
+    const stringQuery = `/songs?name=${query}&search=${option}&sort=asc`;
 
     console.log(stringQuery);
   
