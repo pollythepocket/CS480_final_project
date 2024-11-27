@@ -296,6 +296,23 @@ app.get('/favorite-songs', (req, res) => {
     });
 });
 
+//grabbing user's liked songs
+app.post('/getLikedSongs', (req, res) => {
+    const { username } = req.body;
+    const getLikedSongs = 'SELECT * FROM Songs JOIN Liked_Songs ON Songs.song_id = Liked_Songs.song_id WHERE Liked_Songs.username = ?'
+    db.query(getLikedSongs, [username], (err, songResults) => {
+        if (err) {
+            console.error('Error fetching songs:', err);
+            return res.status(500).send('An error occurred while fetching songs.');
+        }
+        if (songResults.length > 0) {
+            return res.json(songResults);
+        } else {
+            return res.status(404).send('No songs found.');
+        }
+    });
+});
+
 
 app.post('/addLikedSong', (req, res) => {
     const { song_id, username } = req.body;
@@ -308,6 +325,21 @@ app.post('/addLikedSong', (req, res) => {
       }
     });
   });
+
+  app.post('/getAllSongs', (req, res) => {
+    const getSongQuery = 'SELECT * FROM Songs';
+    db.query(getSongQuery, [], (err, songResults) => {
+        if (err) {
+            console.error('Error fetching songs:', err);
+            return res.status(500).send('An error occurred while fetching songs.');
+        }
+        if (songResults.length > 0) {
+            return res.json(songResults);
+        } else {
+            return res.status(404).send('No songs found.');
+        }
+    });
+});
    
 
 // Start the server
