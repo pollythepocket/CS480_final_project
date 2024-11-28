@@ -21,12 +21,18 @@ export default function Toolbar({username}) {
         let path = '/login';
         navigate(path, {state: username});
       } 
+
+      const handlePostSong = () => {
+        let path = '/PostSong';
+        navigate(path, {state: username});
+      }
   
 
   return (
     <div className="toolbar">
           <button type="submit" className="taskbar-button" onClick={routeChange}>Home</button>
           <button type="submit" className="taskbar-button" onClick={routeChangeToLikedList}>Liked Songs</button>
+          <button type="submit" className="taskbar-button" onClick={handlePostSong}>Post Song</button>
           <button type="submit" className="taskbar-button" onClick={routeChangeToLogin}>Logout</button>
     </div>
   );

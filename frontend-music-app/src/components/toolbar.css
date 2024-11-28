@@ -1,3 +1,4 @@
+
 .taskbar-button{
     width: fit-content;
     font-size: large;
@@ -10,8 +11,8 @@
     background-color: #3f143d;
   }
 
-  .toolbar
-{
-   position: auto;
-   top: 0px;
+  .toolbar{
+    display: flex;
+    justify-content: space-between;
+    top: 0px;
 }
