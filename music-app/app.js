@@ -173,6 +173,24 @@ app.get('/songs', (req, res) => {
     })
 });
 
+app.post('/songs', (req, res) => {
+    const { song_name, artist_name, album_name, duration } = req.body;
+
+
+    const query = `INSERT INTO Songs(song_name, artist_name, album_name, duration) VALUES (?, ?, ?, ?)`;
+    db.query(query, [song_name, artist_name, album_name, duration],(err, result) => {
+        if (err) {
+            console.error('Error adding liked songs:', err);
+            return res.status(200).json({
+                message: `Already Added!`
+            });
+        }
+        res.status(200).json({
+            message: `Added New Song!`
+        });
+    })
+});
+
 /**
  * @route GET /albums
  *        GET /albums?column=<column option>>&sort=<sort option>
@@ -260,6 +278,24 @@ app.get('/artists', (req, res) => {
         res.status(200).json({
             data: results,
             message: `Retrieved albums with ${sort}!`
+        });
+    })
+});
+
+
+app.post('/artists', (req, res) => {
+    const { artist_name} = req.body;
+
+    const query = `INSERT INTO Artists(artist_name) VALUES (?)`;
+    db.query(query, [artist_name],(err, result) => {
+        if (err) {
+            console.error('Error adding liked songs:', err);
+            return res.status(200).json({
+                message: `Already Added!`
+            });
+        }
+        res.status(200).json({
+            message: `Added New Song!`
         });
     })
 });

@@ -67,8 +67,32 @@ export default function EndpointContextProvider( {children} ) {
         return json.data;
     } catch (error) {
         console.error('Error fetching songs:', error);
-        throw error; // Re-throw error for further handling
+        throw error; 
     }
+};
+
+const addSong = (song_name, artist_name, album_name, duration) => {
+  fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/songs`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({song_name, artist_name, album_name, duration}),
+  })
+    .then((response) => response.text())
+    .then((message) => {if(message.includes('Already')){
+        alert(message);
+    }})
+    .catch((error) => {console.error('Error:', error)});
+};
+
+const addArtist = (artist_name) => {
+  fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/artists`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({artist_name}),
+  })
+    .then((response) => response.text())
+    .then((message) => {})
+    .catch((error) => {console.error('Error:', error)});
 };
 
 
@@ -128,7 +152,7 @@ export default function EndpointContextProvider( {children} ) {
 
 
   return (
-    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong}}>
+    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong, addSong, addArtist}}>
       {children}
     </endpointContext.Provider>
   )
