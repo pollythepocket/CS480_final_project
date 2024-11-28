@@ -80,47 +80,43 @@ app.post('/login', (req, res) => {
     const { username, password, isAdmin} = req.body;
     const adminResults = [];
     console.log("login>", username)
-    if(isAdmin){
+    if (isAdmin) {
+        console.log("admin");
         const checkAdminQuery = 'SELECT * FROM Admins WHERE username = ?';
-
         db.query(checkAdminQuery, [username], (err, adminResults) => {
-            if (err) throw err;
-
-            if (adminResults.length > 0) {
-                const user = adminResults[0];
-                if (bcrypt.compareSync(password, user.password)) {
-                    return res.send('Admin login successful!');
-                } else {
-                    return res.status(400).send('Incorrect password');
-                }
+          if (err) return res.status(500).send('Database error');
+          if (adminResults.length > 0) {
+            const user = adminResults[0];
+            if (bcrypt.compareSync(password, user.password)) {
+              return res.send('Admin login successful!');
+            } else {
+              return res.status(400).send('Incorrect password');
             }
-
-            // If not found in either table
-            return res.status(400).send('User not found');
+          }
+          return res.status(400).send('User not found');
         });
-    }
-    else if(!isAdmin){
+      } else {
+        console.log("not admin");
         const checkClientQuery = 'SELECT * FROM Clients WHERE username = ?';
         db.query(checkClientQuery, [username], (err, clientResults) => {
-            if (err) throw err;
-
-            if (clientResults.length > 0) {
-                // console.log("Found user")
-                const user = clientResults[0];
-                if (bcrypt.compareSync(password, user.password)) {
-                    return res.status(200).json({
-                        message: "Client login successsful!",
-                        data: user,
-                    });
-                    // return res.send('Client login successful!');
-                } else {
-                    return res.status(400).send('Incorrect password');
-                }
+          if (err) return res.status(500).send('Database error');
+          if (clientResults.length > 0) {
+            const user = clientResults[0];
+            if (bcrypt.compareSync(password, user.password)) {
+              return res.status(200).json({
+                message: "Client login successful!",
+                data: user,
+              });
+            } else {
+              return res.status(400).json({
+                message: "Incorrect username or password",
+              });
             }
+          } else {
+            return res.status(400).send('User not found');
+          }
         });
-    }
-    console.log("Failed to find user")
-    return res.status(400).send('User not found');  
+      }        
 });
 
 
