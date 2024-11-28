@@ -25,12 +25,27 @@ export default function EndpointContextProvider( {children} ) {
     fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password, isAdmin })
-  })
-    .then(response => response.text())
-    .then(message => {if(message.includes('success')){navigate("/songs", {state: username })}})
-    .catch(error => console.error('Error:', error));
+      body: JSON.stringify({ username, password, isAdmin }),
+    })
+      .then(response => {
+        if (!response.ok) {
+          return response.json().then(errorData => {
+            throw new Error(errorData.message || 'An unknown error occurred');
+          });
+        }
+        return response.json(); 
+      })
+      .then(data => {
+        if (data.message.includes('success')) {
+          navigate('/songs', { state: username });
+        }
+      })
+      .catch(error => {
+        alert(error.message);
+        console.error('Error:', error.message);
+      });
   };
+  
 
   const getAllSongs = async (query = '') => {
     try {
