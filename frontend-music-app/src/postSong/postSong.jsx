@@ -16,6 +16,7 @@ export default function PostSongPage() {
     const [ArtistName, setArtistName] = useState(username);
     const [Duration, setDuration] = useState("");
     const [songs, setSongs] = useState([]); 
+    const [DurationList, setDurationList] = useState([]);
     const [songInput, setSongInput] = useState("");
     const [singleSong, setSingleSong] = useState(""); 
 
@@ -32,9 +33,14 @@ export default function PostSongPage() {
             
             addArtist(ArtistName);
             addSong(singleSong, ArtistName, null, Duration);
+            navigate("/LikedSongs", {state: username })
 
         }
     };
+
+    const handleBack = () => {
+        navigate("/LikedSongs", {state: username })
+    }
 
     const handleAlbumChange = (e) => {
         setIsAlbum(e.target.value);
@@ -72,7 +78,7 @@ export default function PostSongPage() {
             <h1>Post Song</h1>
             <hr />
             
-            <div className="options">
+            {/* <div className="options">
                 <label>Are you creating an album?</label>
                 <label className="radio-button">
                     <input
@@ -142,26 +148,28 @@ export default function PostSongPage() {
                 </div>
             )}
 
-            {isAlbum === "no" && (
+            {isAlbum === "no" && ( */}
                 <div className="single-song">
-                    <div className="single-song-name">
-                        <label>Song Name</label>
-                        <input
-                            type="text"
-                            value={singleSong}
-                            onChange={handleSingleSongChange}
-                            placeholder="Enter your song name"
-                        />
-                    </div>
-                    <div className="single-artist-name">
-                        <label>Artist Name</label>
-                        <input
-                            className="artist_name"
-                            placeholder={username}
-                            readOnly
-                            value={ArtistName}
-                            onChange={handleArtistChange}
-                        />
+                    <div className="row">
+                        <div className="single-song-name">
+                            <label>Song Name</label>
+                            <input
+                                type="text"
+                                value={singleSong}
+                                onChange={handleSingleSongChange}
+                                placeholder="Enter your song name"
+                            />
+                        </div>
+                        <div className="single-artist-name">
+                            <label>Artist Name</label>
+                            <input
+                                className="artist_name"
+                                placeholder={username}
+                                readOnly
+                                value={ArtistName}
+                                onChange={handleArtistChange}
+                            />
+                        </div>
                     </div>
                     <div className="single-duration">
                         <label>Song Duration</label>
@@ -173,9 +181,12 @@ export default function PostSongPage() {
                         />
                     </div>
                 </div>
-            )}
+            {/* )} */}
 
-            <button onClick={handleSubmit}>Submit</button>
+            <div className="row">
+                <button onClick={handleBack}>Back</button>
+                <button onClick={handleSubmit}>Submit</button>
+            </div>
         </div>
     );
 }
