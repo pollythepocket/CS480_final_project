@@ -29,21 +29,18 @@ export default function EndpointContextProvider( {children} ) {
     })
       .then(response => {
         if (!response.ok) {
-          // Parse the error message from the server response
           return response.json().then(errorData => {
             throw new Error(errorData.message || 'An unknown error occurred');
           });
         }
-        return response.json(); // Parse JSON response for success
+        return response.json(); 
       })
       .then(data => {
-        // Handle success response
         if (data.message.includes('success')) {
           navigate('/songs', { state: username });
         }
       })
       .catch(error => {
-        // Handle errors and show alert
         alert(error.message);
         console.error('Error:', error.message);
       });
