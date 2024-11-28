@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./search.css";
 
-export default function Search({ username, onSearch }) {
+export default function Search({ username, onSearch, duration, number }) {
   const [searchOption, setSearchOption] = useState("song_name");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -64,6 +64,10 @@ export default function Search({ username, onSearch }) {
               onChange={handleSelect}
             />
             <div className="radio-label">Search by Album</div>
+          </div>
+          <div className="list-stats">
+            <p style={{padding: '5px'}}>Total Duration: {duration}</p>
+            <p style={{padding: '5px'}}>Total Songs: {number}</p>
           </div>
         </div>
       </form>

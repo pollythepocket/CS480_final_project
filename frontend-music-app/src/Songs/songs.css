@@ -53,15 +53,3 @@ td {
   padding: 5px 10px;
   font-size: 14px; 
 }
-
-.taskbar-button{
-  width: fit-content;
-  font-size: large;
-  margin: 50px;
-  padding: 10px;
-  height: fit-content;
-}
-
-.taskbar-button:hover{
-  background-color: #3f143d;
-}
