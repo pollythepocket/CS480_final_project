@@ -51,14 +51,14 @@ app.post('/register', (req, res) => {
 
     let query;
     if (isAdmin) {
-        query = 'INSERT INTO Admins (username, password) VALUES (?, ?, ?)';
+        query = 'INSERT INTO Admins (username, password) VALUES (?, ?)';
     } else {
         query = 'INSERT INTO Clients (username, password, has_artist_permission) VALUES (?, ?, ?)';
     }
 
     const values = isAdmin
-        ? [username, hashedPassword, null]
-        : [username, hashedPassword, null, 0];
+        ? [username, hashedPassword]
+        : [username, hashedPassword, 'no'];
 
     db.query(query, values, (err, result) => {
         if (err) return res.status(400).send(err.message);
