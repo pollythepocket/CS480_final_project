@@ -9,11 +9,10 @@ CREATE TABLE Clients (
 );
 
 
-CREATE TABLE Admins(
+CREATE TABLE Admins (
     admin_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(1000) NOT NULL,
-    email VARCHAR(50) DEFAULT NULL
+    password VARCHAR(1000) NOT NULL
 );
 
 CREATE Table Artists(
@@ -138,7 +137,6 @@ VALUES ('CHROMAKOPIA', 'Tyler, The Creator', '53min', 14, 'album_covers\chromako
 ('SHRAPNEL FLUX: VEILED TERMINAL', 'Purity Filter', '11min 10sec', 6, "album_covers\SHRAPNEL_FLUX.jpg"),
 ("Hazardous Bubble Basics", "Golemm", "15min 37sec", 8, "album_covers\Hazardous_Bubble_Basics.jpg");
 
---Songs with Albums
 INSERT INTO Songs(song_name, artist_name, album_name, duration)
 VALUES ('St. Chroma', 'Tyler, The Creator', 'CHROMAKOPIA', '3:17'),
 ('Rah Tah Tah', 'Tyler, The Creator', 'CHROMAKOPIA', '2:45'),

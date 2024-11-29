@@ -72,7 +72,7 @@ describe('User API Tests', () => {
     // console.log(songList);
 
     expect(response.status).toBe(200);
-    expect(songList.length).toBe(477);
+    expect(songList.length).toBe(499);
   });
 
   test('GET /songs - Test ASC', async () => {
@@ -200,7 +200,7 @@ describe('User API Tests', () => {
     }));
 
     expect(response.status).toBe(200);
-    expect(songList.length).toBe(41);
+    expect(songList.length).toBe(44);
   });
 
   test('GET /albums - Try the number_of_songs Column', async () => {

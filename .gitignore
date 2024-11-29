@@ -1,3 +1,4 @@
 .idea/*
 .vscode/*
 /music-app/.env.local
+/frontend-music-app/.env.local
