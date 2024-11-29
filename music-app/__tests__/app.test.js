@@ -319,18 +319,18 @@ describe('User API Tests', () => {
     expect(info.message).toBe("Got all the liked songs!");
   });
 
-  test('POST /liked_songs - add a new liked song', async () => {
+  test('POST /add_liked_songs - add a new liked song', async () => {
     const likeSong = {
       username: "emily",
       song_id: 3 // might need to change for the test to pass
     };
 
     const response = await request(app)
-      .post(`/liked_songs`)
+      .post(`/add_liked_songs`)
       .send(likeSong); 
 
     let info = response.body;
-    // console.log(info);
+    console.log(info);
 
     expect(response.status).toBe(200);
     expect(info.message).toBe("Added New Favorite Song!");
@@ -347,10 +347,58 @@ describe('User API Tests', () => {
       .send(likeSong); 
 
     let info = response.body;
-    console.log(info);
+    // console.log(info);
 
     expect(response.status).toBe(200);
     expect(info.message).toBe("Removed Song From Liked Songs!");
+  });
+
+  test('GET /clients - get all the clients', async () => {
+
+    const response = await request(app)
+      .get(`/clients`); 
+
+    let info = response.body;
+    // console.log(info);
+
+    expect(response.status).toBe(200);
+    expect(info.message).toBe("Retrieved Clients List!");
+  });
+
+  test('GET /clients - sort clients by has_artist_permissions DESC', async () => {
+
+    const response = await request(app)
+      .get(`/clients?sort=DESC&column=has_artist_permission`); 
+
+    let info = response.body;
+    // console.log(info);
+
+    expect(response.status).toBe(200);
+    expect(info.message).toBe("Retrieved Clients List!");
+  });
+
+  test('GET /clients - find clients with the letter e in their username', async () => {
+
+    const response = await request(app)
+      .get(`/clients?name=e&searchON=username`); 
+
+    let info = response.body;
+    // console.log(info);
+
+    expect(response.status).toBe(200);
+    expect(info.message).toBe("Retrieved Clients List!");
+  });
+
+  test('GET /clients - no clients found', async () => {
+
+    const response = await request(app)
+      .get(`/clients?sort=DESC&name=z`); 
+
+    let info = response.body;
+    // console.log(info);
+
+    expect(response.status).toBe(200);
+    expect(info.message).toBe("Retrieved Clients List!");
   });
 
 });
