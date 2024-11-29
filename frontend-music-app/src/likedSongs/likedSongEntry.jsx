@@ -7,10 +7,13 @@ export default function LikedSongEntry({ song, username }) {
 
 
   const { deleteLikedSong } = useContext(endpointContext);
+  let navigate = useNavigate();
 
   const handleDeleteSong = (e) => {
     e.preventDefault()
     deleteLikedSong(song.song_id, username);
+    navigate('/LikedSongs', { state: username });
+  
   }
 
   return (

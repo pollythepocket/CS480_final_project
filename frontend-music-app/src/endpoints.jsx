@@ -142,7 +142,7 @@ const addArtist = (artist_name) => {
     })
     
       .then((response) => {response.text()})
-      .then((message) => {if(message.includes('Remove')) alert(message)})
+      .then((message) => {})
       .catch((error) => console.error('Error:', error));
     
   }

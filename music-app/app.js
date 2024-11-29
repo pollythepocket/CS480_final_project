@@ -362,6 +362,8 @@ app.post('/add_liked_songs', (req, res) => {
   app.delete('/liked_songs', (req, res) => {
     const { song_id, username } = req.body;
 
+    console.log(song_id,username);
+
 
     const deleteSong = 'DELETE FROM Liked_Songs WHERE song_id = ? AND username = ?';
   
