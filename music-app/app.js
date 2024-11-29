@@ -53,7 +53,7 @@ app.post('/register', (req, res) => {
     if (isAdmin) {
         query = 'INSERT INTO Admins (username, password, email) VALUES (?, ?, ?)';
     } else {
-        query = 'INSERT INTO Clients (username, password, email, has_artist_permission) VALUES (?, ?, ?, ?)';
+        query = 'INSERT INTO Clients (username, password, has_artist_permission) VALUES (?, ?, ?)';
     }
 
     const values = isAdmin

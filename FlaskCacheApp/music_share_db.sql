@@ -5,7 +5,6 @@ USE music_app;
 CREATE TABLE Clients (
     username VARCHAR(50) PRIMARY KEY,    -- must be a unique name or won't be inserted
     password VARCHAR(128) NOT NULL,          -- reduced length; 128 fits most hash algorithms
-    email VARCHAR(50) DEFAULT NULL,          -- email is optional for now
     has_artist_permission BOOLEAN DEFAULT FALSE -- boolean for better clarity
 );
 
