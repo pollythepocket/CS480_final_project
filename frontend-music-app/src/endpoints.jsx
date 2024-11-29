@@ -99,10 +99,9 @@ const addArtist = (artist_name) => {
 
   const getLikedSongs = async(username) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/liked_songs`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username })
+      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/liked_songs?username=${username}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
       });
 
       if (!response.ok) {

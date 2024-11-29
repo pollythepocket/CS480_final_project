@@ -51,7 +51,7 @@ app.post('/register', (req, res) => {
 
     let query;
     if (isAdmin) {
-        query = 'INSERT INTO Admins (username, password, email) VALUES (?, ?, ?)';
+        query = 'INSERT INTO Admins (username, password) VALUES (?, ?, ?)';
     } else {
         query = 'INSERT INTO Clients (username, password, has_artist_permission) VALUES (?, ?, ?)';
     }
@@ -70,7 +70,7 @@ app.post('/register', (req, res) => {
 @route POST /login
 @request {username, password}
 @response {
-            data: [{client_id, username, password, email, has_artist_permission}], 
+            data: [{client_id, username, password, has_artist_permission}], 
             message: "Login Successful"
            }
 @desc Will check if a client exists
@@ -312,7 +312,7 @@ app.post('/artists', (req, res) => {
  * }
  */
 app.get('/liked_songs', (req, res) => {
-    const { username } = req.body;
+    const { username } = req.query;
 
     query = 'SELECT * FROM Songs JOIN Liked_Songs ON Songs.song_id = Liked_Songs.song_id WHERE Liked_Songs.username = ? ORDER BY Songs.song_name ASC';
     db.query(query, [username], (err, results) => {
@@ -383,14 +383,14 @@ app.post('/add_liked_songs', (req, res) => {
    * @route GET /clients
    * @request optional parameters {sort, column, search, name}. 
    * @sort_option Valid parameters for sort are {asc, desc}.
-   * @column_option parameters for column are {username, email, has_artist_permission}
-   * @search_option parameters for search are {username, email, has_artist_permission}
+   * @column_option parameters for column are {username, has_artist_permission}
+   * @search_option parameters for search are {username, has_artist_permission}
    * @name is the name of the <search> column you want
    * @response 
    * { message,
    *   data: [
    *    ...
-   *    { username, password, email, has_artist_permission }
+   *    { username, password, has_artist_permission }
    *    ...
    *    ]}
    * @desc Will return a list of clients that match the filters
@@ -401,10 +401,10 @@ app.post('/add_liked_songs', (req, res) => {
     const validOption = ['asc', 'desc'];
     const order = validOption.includes(sort?.toLowerCase()) ? sort.toUpperCase() : 'ASC';
 
-    const validColumn = ['username', 'email', 'has_artist_permission'];
+    const validColumn = ['username', 'has_artist_permission'];
     const sortColumn = validColumn.includes(column) ? column : 'username';
 
-    const validSearch = ['username', 'email', 'has_artist_permission'];
+    const validSearch = ['username', 'has_artist_permission'];
     const sortSearch = validSearch.includes(searchOn) ? searchOn : 'username';
 
     const searchName = name != null ? `%${name}%` : "%"; 
