@@ -198,7 +198,7 @@ app.post('/songs', (req, res) => {
  * @request optional parameters {sort, column, search, name}. 
  * @sort_option Valid parameters for sort are {asc, desc}.
  * @column_option parameters for column are {album_name, artist_name, duration, number_of_songs}
- * @column_option parameters for search are {album_name, artist_name, duration, number_of_songs}
+ * @search_option parameters for search are {album_name, artist_name, duration, number_of_songs}
  * @name is the name of the <search> column you want
  * @response List of albums in the order specified: see below
  * [
@@ -372,11 +372,59 @@ app.post('/add_liked_songs', (req, res) => {
                 message: `Already Deleted!`
             });
         }
+        
         res.status(200).json({
             message: "Removed Song From Liked Songs!"
         });
     });
   });
+
+  /**
+   * @route GET /clients
+   * @request optional parameters {sort, column, search, name}. 
+   * @sort_option Valid parameters for sort are {asc, desc}.
+   * @column_option parameters for column are {username, email, has_artist_permission}
+   * @search_option parameters for search are {username, email, has_artist_permission}
+   * @name is the name of the <search> column you want
+   * @response 
+   * { message,
+   *   data: [
+   *    ...
+   *    { username, password, email, has_artist_permission }
+   *    ...
+   *    ]}
+   * @desc Will return a list of clients that match the filters
+   */
+  app.get('/clients', (req, res) => {
+    const { column, sort, searchOn, name } = req.query;
+
+    const validOption = ['asc', 'desc'];
+    const order = validOption.includes(sort?.toLowerCase()) ? sort.toUpperCase() : 'ASC';
+
+    const validColumn = ['username', 'email', 'has_artist_permission'];
+    const sortColumn = validColumn.includes(column) ? column : 'username';
+
+    const validSearch = ['username', 'email', 'has_artist_permission'];
+    const sortSearch = validSearch.includes(searchOn) ? searchOn : 'username';
+
+    const searchName = name != null ? `%${name}%` : "%"; 
+    
+    const getSong = `SELECT * FROM Clients WHERE ${sortColumn} IS NOT NULL AND ${sortSearch} LIKE "${searchName}" ORDER BY ${sortColumn} ${order}`;
+
+    db.query(getSong, (err, results) => {
+        if (err) {
+            console.error('Error retrieving the list of clients:', err);  // Logs detailed error
+            return res.status(500).send('Error retrieving the clients');
+        }
+        results = results.length > 0 ? results : [];
+        res.status(200).json({
+            data: results,
+            message: "Retrieved Clients List!"
+        });
+    });
+  });
+  
+
 
 // Start the server
 app.listen(process.env.SERVER_PORT, () => {
