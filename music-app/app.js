@@ -51,14 +51,14 @@ app.post('/register', (req, res) => {
 
     let query;
     if (isAdmin) {
-        query = 'INSERT INTO Admins (username, password) VALUES (?, ?, ?)';
+        query = 'INSERT INTO Admins (username, password) VALUES (?, ?)';
     } else {
         query = 'INSERT INTO Clients (username, password, has_artist_permission) VALUES (?, ?, ?)';
     }
 
     const values = isAdmin
-        ? [username, hashedPassword, null]
-        : [username, hashedPassword, null, 0];
+        ? [username, hashedPassword]
+        : [username, hashedPassword, 'no'];
 
     db.query(query, values, (err, result) => {
         if (err) return res.status(400).send(err.message);
@@ -361,6 +361,8 @@ app.post('/add_liked_songs', (req, res) => {
  */
   app.delete('/liked_songs', (req, res) => {
     const { song_id, username } = req.body;
+
+    console.log(song_id,username);
 
 
     const deleteSong = 'DELETE FROM Liked_Songs WHERE song_id = ? AND username = ?';
