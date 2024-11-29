@@ -312,7 +312,7 @@ app.post('/artists', (req, res) => {
  * }
  */
 app.get('/liked_songs', (req, res) => {
-    const { username } = req.body;
+    const { username } = req.query;
 
     query = 'SELECT * FROM Songs JOIN Liked_Songs ON Songs.song_id = Liked_Songs.song_id WHERE Liked_Songs.username = ? ORDER BY Songs.song_name ASC';
     db.query(query, [username], (err, results) => {

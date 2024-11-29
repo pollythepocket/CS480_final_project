@@ -309,8 +309,7 @@ describe('User API Tests', () => {
     };
 
     const response = await request(app)
-      .get(`/liked_songs`)
-      .send(likeSong); 
+      .get(`/liked_songs?username=emily`);
 
     let info = response.body;
     // console.log(info);
