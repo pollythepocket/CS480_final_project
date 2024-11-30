@@ -1,4 +1,8 @@
 
+body{
+  padding-top: 20px;
+}
+
 .taskbar-button{
     width: fit-content;
     font-size: large;

@@ -1,12 +1,16 @@
 
-
+import { useState } from 'react';
 import { createContext } from 'react'
 import { useNavigate } from 'react-router';
-
 
 export const endpointContext = createContext();
 
 export default function EndpointContextProvider( {children} ) {
+
+  const [username, setUsername] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
+
   const navigate = useNavigate();
   
   const registerUser = (username, password, isAdmin) => {
@@ -17,7 +21,14 @@ export default function EndpointContextProvider( {children} ) {
         body: JSON.stringify({ username, password, isAdmin })
     })
     .then(response => response.text())
-    .then(data => {if(!data.includes('Duplicate entry')){navigate("/songs", {state: username })}})
+    .then(data => {
+      alert(data);
+      if(!data.includes('Duplicate entry')){
+        setUsername(username);
+        setIsAdmin(isAdmin);
+        setSignedIn(true);
+        navigate("/songs", {state: username })}
+      })
     .catch(error => {console.error('Error:', error)});
   };
 
@@ -37,6 +48,9 @@ export default function EndpointContextProvider( {children} ) {
       })
       .then(data => {
         if (data.message.includes('success')) {
+          setUsername(username)
+          setIsAdmin(isAdmin)
+          setSignedIn(true)
           navigate('/songs', { state: username });
         }
       })
@@ -184,7 +198,7 @@ const addArtist = (artist_name) => {
 
 
   return (
-    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong, addSong, addArtist, getClientRequestInfo, editClientRequest}}>
+    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong, addSong, addArtist, getClientRequestInfo, editClientRequest, username, isAdmin, setSignedIn}}>
       {children}
     </endpointContext.Provider>
   )
