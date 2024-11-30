@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./toolbar.css";
 import { endpointContext } from "../endpoints";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router";
 
 export default function Toolbar({username}) {
+  const { isAdmin, setSignedIn } = useContext(endpointContext)
     let navigate = useNavigate();
 
     const routeChange = () => {
@@ -19,6 +20,7 @@ export default function Toolbar({username}) {
 
       const routeChangeToLogin = () => {
         let path = '/login';
+        setSignedIn(false);
         navigate(path, {state: username});
       } 
 
@@ -31,7 +33,7 @@ export default function Toolbar({username}) {
   return (
     <div className="toolbar">
           <button type="submit" className="taskbar-button" onClick={routeChange}>Home</button>
-          <button type="submit" className="taskbar-button" onClick={routeChangeToLikedList}>Liked Songs</button>
+          {isAdmin ? "" : <button type="submit" className="taskbar-button" onClick={routeChangeToLikedList}>Liked Songs</button> }
           <button type="submit" className="taskbar-button" onClick={handlePostSong}>Post Song</button>
           <button type="submit" className="taskbar-button" onClick={routeChangeToLogin}>Logout</button>
     </div>
