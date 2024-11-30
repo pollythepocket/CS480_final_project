@@ -4,7 +4,7 @@ import { endpointContext } from "../endpoints";
 import { useNavigate } from "react-router";
 
 export default function SongEntry({ song, username }) {
-  const { addLikedSong } = useContext(endpointContext);
+  const { addLikedSong, isAdmin } = useContext(endpointContext);
 
   const handleAddSong = (e) => {
     e.preventDefault()
@@ -18,8 +18,8 @@ export default function SongEntry({ song, username }) {
       <td>{song.duration}</td>
       <td>{song.album_name}</td>
       <td> 
-        <button style={{width: 'fit-content'}} onClick={handleAddSong}>+</button>
-  </td>
+        {isAdmin? "": <button style={{width: 'fit-content'}} onClick={handleAddSong}>+</button>}
+      </td>
     </tr>
   );
 }

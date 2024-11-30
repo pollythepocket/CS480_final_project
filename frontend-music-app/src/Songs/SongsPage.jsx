@@ -107,7 +107,7 @@ export default function SongsPage() {
                 <th className="col artist">Artist</th>
                 <th className="col duration">Duration</th>
                 <th className="col album">Album</th>
-                <th className="col add" style={{ width: "30px" }}>Add</th>
+                {isAdmin ? "" :<th className="col add" style={{ width: "30px" }}>Add</th>}
               </tr>
             </thead>
             <tbody>
