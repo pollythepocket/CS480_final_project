@@ -8,7 +8,7 @@ import { useEffect } from "react";
 export default function Toolbar({username}) {
     let navigate = useNavigate();
     const [clientRequestStatus, setClientRequest] = useState("");
-    const {getClientRequestInfo, editClientRequest} = useContext(endpointContext);
+    const {getClientRequestInfo, editClientRequest, isAdmin} = useContext(endpointContext);
 
     const handleGetRequestInfo = () => {
       getClientRequestInfo(username)
@@ -59,7 +59,7 @@ export default function Toolbar({username}) {
   return (
     <div className="toolbar">
           <button type="submit" className="taskbar-button" onClick={routeChange}>Home</button>
-          {<button type="submit" className="taskbar-button" onClick={routeChangeToLikedList}>Liked Songs</button> }
+          {isAdmin? "": <button type="submit" className="taskbar-button" onClick={routeChangeToLikedList}>Liked Songs</button> }
 
           {clientRequestStatus === "yes" ? (
                 <button type="submit" className="taskbar-button" onClick={() => handlePostSong()}>Post Song</button>
