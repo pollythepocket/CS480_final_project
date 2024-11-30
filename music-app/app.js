@@ -51,14 +51,14 @@ app.post('/register', (req, res) => {
 
     let query;
     if (isAdmin) {
-        query = 'INSERT INTO Admins (username, password, email) VALUES (?, ?, ?)';
+        query = 'INSERT INTO Admins (username, password) VALUES (?, ?)';
     } else {
-        query = 'INSERT INTO Clients (username, password, email, has_artist_permission) VALUES (?, ?, ?, ?)';
+        query = 'INSERT INTO Clients (username, password, has_artist_permission) VALUES (?, ?, ?)';
     }
 
     const values = isAdmin
-        ? [username, hashedPassword, null]
-        : [username, hashedPassword, null, 0];
+        ? [username, hashedPassword]
+        : [username, hashedPassword, 'no'];
 
     db.query(query, values, (err, result) => {
         if (err) return res.status(400).send(err.message);
@@ -70,7 +70,7 @@ app.post('/register', (req, res) => {
 @route POST /login
 @request {username, password}
 @response {
-            data: [{client_id, username, password, email, has_artist_permission}], 
+            data: [{client_id, username, password, has_artist_permission}], 
             message: "Login Successful"
            }
 @desc Will check if a client exists
@@ -182,7 +182,7 @@ app.post('/songs', (req, res) => {
         if (err) {
             console.error('Error adding liked songs:', err);
             return res.status(200).json({
-                message: `Already Added!`
+                message: `Already Added Song!`
             });
         }
         res.status(200).json({
@@ -198,7 +198,7 @@ app.post('/songs', (req, res) => {
  * @request optional parameters {sort, column, search, name}. 
  * @sort_option Valid parameters for sort are {asc, desc}.
  * @column_option parameters for column are {album_name, artist_name, duration, number_of_songs}
- * @column_option parameters for search are {album_name, artist_name, duration, number_of_songs}
+ * @search_option parameters for search are {album_name, artist_name, duration, number_of_songs}
  * @name is the name of the <search> column you want
  * @response List of albums in the order specified: see below
  * [
@@ -239,6 +239,24 @@ app.get('/albums', (req, res) => {
             query: query,
             data: results,
             message: `Retrieved albums with ${sort} and ${sortColumn}!`
+        });
+    })
+});
+
+app.post('/albums', (req, res) => {
+    const { album_name, artist_name, number_of_songs } = req.body;
+
+
+    const query = `INSERT INTO Albums(album_name, artist_name, duration, number_of_songs, album_image_url) VALUES (?, ?, 0, ?, 'image')`;
+    db.query(query, [album_name, artist_name, number_of_songs ],(err, result) => {
+        if (err) {
+            console.error('Error adding album', err);
+            return res.status(200).json({
+                message: `GRRRR!`
+            });
+        }
+        res.status(200).json({
+            message: `Added New album`
         });
     })
 });
@@ -291,7 +309,7 @@ app.post('/artists', (req, res) => {
         if (err) {
             console.error('Error adding liked songs:', err);
             return res.status(200).json({
-                message: `Already Added!`
+                message: `Artist Already Added!`
             });
         }
         res.status(200).json({
@@ -311,8 +329,8 @@ app.post('/artists', (req, res) => {
  *   message: "Got all the liked songs!"
  * }
  */
-app.post('/liked_songs', (req, res) => {
-    const { username } = req.body;
+app.get('/liked_songs', (req, res) => {
+    const { username } = req.query;
 
     query = 'SELECT * FROM Songs JOIN Liked_Songs ON Songs.song_id = Liked_Songs.song_id WHERE Liked_Songs.username = ? ORDER BY Songs.song_name ASC';
     db.query(query, [username], (err, results) => {
@@ -362,8 +380,10 @@ app.post('/add_liked_songs', (req, res) => {
   app.delete('/liked_songs', (req, res) => {
     const { song_id, username } = req.body;
 
+    console.log(song_id,username);
 
-    const deleteSong = 'DELETE FROM Liked_Songs WHERE song_id = ?';
+
+    const deleteSong = 'DELETE FROM Liked_Songs WHERE song_id = ? AND username = ?';
   
     db.query(deleteSong, [song_id, username], (err) => {
         if (err) {
@@ -372,11 +392,81 @@ app.post('/add_liked_songs', (req, res) => {
                 message: `Already Deleted!`
             });
         }
+        
         res.status(200).json({
             message: "Removed Song From Liked Songs!"
         });
     });
   });
+
+  /**
+   * @route GET /clients
+   * @request optional parameters {sort, column, search, name}. 
+   * @sort_option Valid parameters for sort are {asc, desc}.
+   * @column_option parameters for column are {username, has_artist_permission}
+   * @search_option parameters for search are {username, has_artist_permission}
+   * @name is the name of the <search> column you want
+   * @response 
+   * { message,
+   *   data: [
+   *    ...
+   *    { username, password, has_artist_permission }
+   *    ...
+   *    ]}
+   * @desc Will return a list of clients that match the filters
+   */
+  app.get('/clients', (req, res) => {
+    const { column, sort, searchOn, name } = req.query;
+
+    const validOption = ['asc', 'desc'];
+    const order = validOption.includes(sort?.toLowerCase()) ? sort.toUpperCase() : 'ASC';
+
+    const validColumn = ['username', 'has_artist_permission'];
+    const sortColumn = validColumn.includes(column) ? column : 'username';
+
+    const validSearch = ['username', 'has_artist_permission'];
+    const sortSearch = validSearch.includes(searchOn) ? searchOn : 'username';
+
+    const searchName = name != null ? `%${name}%` : "%"; 
+    
+    const getSong = `SELECT * FROM Clients WHERE ${sortColumn} IS NOT NULL AND ${sortSearch} LIKE "${searchName}" ORDER BY ${sortColumn} ${order}`;
+
+    db.query(getSong, (err, results) => {
+        if (err) {
+            console.error('Error retrieving the list of clients:', err);  // Logs detailed error
+            return res.status(500).send('Error retrieving the clients');
+        }
+        results = results.length > 0 ? results : [];
+        res.status(200).json({
+            data: results,
+            message: "Retrieved Clients List!"
+        });
+    });
+  });
+
+
+//updates the clients permission
+  app.put('/clients', (req, res) => {
+    const {requestType, name} = req.body;
+
+    const query = 'UPDATE Clients SET has_artist_permission = ? WHERE username = ?'
+
+    db.query(query, [requestType, name], (err) => {
+        if (err) {
+            console.error('Error changing client', err); 
+            return res.status(500).json({
+                message: `Something happened`
+            });
+        }
+        
+        res.status(200).json({
+            message: "client has been changed"
+        });
+    });
+
+  });
+  
+
 
 // Start the server
 app.listen(process.env.SERVER_PORT, () => {

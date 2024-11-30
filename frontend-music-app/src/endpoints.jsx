@@ -1,12 +1,16 @@
 
-
+import { useState } from 'react';
 import { createContext } from 'react'
 import { useNavigate } from 'react-router';
-
 
 export const endpointContext = createContext();
 
 export default function EndpointContextProvider( {children} ) {
+
+  const [username, setUsername] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
+
   const navigate = useNavigate();
   
   const registerUser = (username, password, isAdmin) => {
@@ -17,7 +21,13 @@ export default function EndpointContextProvider( {children} ) {
         body: JSON.stringify({ username, password, isAdmin })
     })
     .then(response => response.text())
-    .then(data => {alert(data); if(!data.includes('Duplicate entry')){navigate("/songs", {state: username })}})
+    .then(data => {
+      if(!data.includes('Duplicate entry')){
+        setUsername(username);
+        setIsAdmin(isAdmin);
+        setSignedIn(true);
+        navigate("/songs", {state: username })}
+      })
     .catch(error => {console.error('Error:', error)});
   };
 
@@ -37,6 +47,9 @@ export default function EndpointContextProvider( {children} ) {
       })
       .then(data => {
         if (data.message.includes('success')) {
+          setUsername(username)
+          setIsAdmin(isAdmin)
+          setSignedIn(true)
           navigate('/songs', { state: username });
         }
       })
@@ -99,10 +112,9 @@ const addArtist = (artist_name) => {
 
   const getLikedSongs = async(username) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/liked_songs`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username })
+      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/liked_songs?username=${username}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
       });
 
       if (!response.ok) {
@@ -143,16 +155,62 @@ const addArtist = (artist_name) => {
     })
     
       .then((response) => {response.text()})
-      .then((message) => {if(message.includes('Remove')) alert(message)})
+      .then((message) => {})
       .catch((error) => console.error('Error:', error));
     
   }
+
+  const getClientRequestInfo = async(username) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/clients?name=${username}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      if (!json || !json.data) {
+          throw new Error('Invalid response structure');
+      }
+
+      return json.data;
+  } catch (error) {
+      console.error('Error fetching songs:', error);
+      throw error;
+  }
+};
   
+  const editClientRequest = (requestType, name) => {
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/clients`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ requestType, name }),
+    })
+      .then((response) => response.text())
+      .then((message) => {})
+      .catch((error) => {console.error('Error:', error)});
+  };
+
+  const addAlbum = (album_name, artist_name, number_of_songs) =>{
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/albums`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ album_name, artist_name, number_of_songs}),
+    })
+      .then((response) => response.text())
+      .then((message) => {if(message.includes('Already')){
+          alert(message);
+      }})
+      .catch((error) => {console.error('Error:', error)});
+  }
 
 
 
   return (
-    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong, addSong, addArtist}}>
+    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong, addSong, addArtist, getClientRequestInfo, editClientRequest, username, isAdmin, setSignedIn, addAlbum}}>
       {children}
     </endpointContext.Provider>
   )

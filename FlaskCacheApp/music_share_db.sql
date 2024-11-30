@@ -5,16 +5,14 @@ USE music_app;
 CREATE TABLE Clients (
     username VARCHAR(50) PRIMARY KEY,    -- must be a unique name or won't be inserted
     password VARCHAR(128) NOT NULL,          -- reduced length; 128 fits most hash algorithms
-    email VARCHAR(50) DEFAULT NULL,          -- email is optional for now
-    has_artist_permission BOOLEAN DEFAULT FALSE -- boolean for better clarity
+    has_artist_permission VARCHAR(50) DEFAULT 'no' -- boolean for better clarity
 );
 
 
-CREATE TABLE Admins(
+CREATE TABLE Admins (
     admin_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(1000) NOT NULL,
-    email VARCHAR(50) DEFAULT NULL
+    password VARCHAR(1000) NOT NULL
 );
 
 CREATE Table Artists(
@@ -139,7 +137,6 @@ VALUES ('CHROMAKOPIA', 'Tyler, The Creator', '53min', 14, 'album_covers\chromako
 ('SHRAPNEL FLUX: VEILED TERMINAL', 'Purity Filter', '11min 10sec', 6, "album_covers\SHRAPNEL_FLUX.jpg"),
 ("Hazardous Bubble Basics", "Golemm", "15min 37sec", 8, "album_covers\Hazardous_Bubble_Basics.jpg");
 
---Songs with Albums
 INSERT INTO Songs(song_name, artist_name, album_name, duration)
 VALUES ('St. Chroma', 'Tyler, The Creator', 'CHROMAKOPIA', '3:17'),
 ('Rah Tah Tah', 'Tyler, The Creator', 'CHROMAKOPIA', '2:45'),

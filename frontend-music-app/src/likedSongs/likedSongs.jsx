@@ -103,7 +103,7 @@ export default function LikedSongs() {
             </thead>
             <tbody>
               {filteredSongs.length > 0 ? (
-                filteredSongs.map((song) => <LikedSongEntry key={song.song_id} song={song} />)
+                filteredSongs.map((song) => <LikedSongEntry key={song.song_id} song={song} username={username} />)
               ) : (
                 <tr>
                   <td colSpan="5">No songs available</td>

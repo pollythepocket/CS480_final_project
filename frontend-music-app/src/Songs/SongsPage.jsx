@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 
 export default function SongsPage() {
-  const { getAllSongs } = useContext(endpointContext);
+  const { getAllSongs, isAdmin } = useContext(endpointContext);
   const [songs, setSongs] = useState([]);
   const [filteredSongs, setFilteredSongs] = useState([]);
   const [error, setError] = useState(null);
@@ -95,7 +95,8 @@ export default function SongsPage() {
   return (
     <div className="song-page">
         <Toolbar username={username}/>
-      <h1>Songs</h1>
+      <h1>All Songs</h1>
+      <h4>Signed in as {isAdmin ? "admin": "client"}</h4>
       <Search username={username} onSearch={handleSearch} number={totalSongs} duration={totalDuration}/>
       {error && <p className="error-message">Error: {error}</p>}
       <div className="all-songs">
