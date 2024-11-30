@@ -425,6 +425,28 @@ app.post('/add_liked_songs', (req, res) => {
         });
     });
   });
+
+
+//updates the clients permission
+  app.put('/clients', (req, res) => {
+    const {requestType, name} = req.body;
+
+    const query = 'UPDATE Clients SET has_artist_permission = ? WHERE username = ?'
+
+    db.query(query, [requestType, name], (err) => {
+        if (err) {
+            console.error('Error changing client', err); 
+            return res.status(500).json({
+                message: `Something happened`
+            });
+        }
+        
+        res.status(200).json({
+            message: "client has been changed"
+        });
+    });
+
+  });
   
 
 

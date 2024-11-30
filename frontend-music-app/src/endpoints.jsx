@@ -17,7 +17,7 @@ export default function EndpointContextProvider( {children} ) {
         body: JSON.stringify({ username, password, isAdmin })
     })
     .then(response => response.text())
-    .then(data => {alert(data); if(!data.includes('Duplicate entry')){navigate("/songs", {state: username })}})
+    .then(data => {if(!data.includes('Duplicate entry')){navigate("/songs", {state: username })}})
     .catch(error => {console.error('Error:', error)});
   };
 
@@ -146,12 +146,45 @@ const addArtist = (artist_name) => {
       .catch((error) => console.error('Error:', error));
     
   }
+
+  const getClientRequestInfo = async(username) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/clients?name=${username}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      if (!json || !json.data) {
+          throw new Error('Invalid response structure');
+      }
+
+      return json.data;
+  } catch (error) {
+      console.error('Error fetching songs:', error);
+      throw error;
+  }
+};
   
+  const editClientRequest = (requestType, name) => {
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/clients`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ requestType, name }),
+    })
+      .then((response) => response.text())
+      .then((message) => {alert(message)})
+      .catch((error) => {console.error('Error:', error)});
+  };
 
 
 
   return (
-    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong, addSong, addArtist}}>
+    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong, addSong, addArtist, getClientRequestInfo, editClientRequest}}>
       {children}
     </endpointContext.Provider>
   )
