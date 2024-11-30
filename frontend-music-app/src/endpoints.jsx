@@ -160,12 +160,45 @@ const addArtist = (artist_name) => {
       .catch((error) => console.error('Error:', error));
     
   }
+
+  const getClientRequestInfo = async(username) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/clients?name=${username}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      if (!json || !json.data) {
+          throw new Error('Invalid response structure');
+      }
+
+      return json.data;
+  } catch (error) {
+      console.error('Error fetching songs:', error);
+      throw error;
+  }
+};
   
+  const editClientRequest = (requestType, name) => {
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/clients`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ requestType, name }),
+    })
+      .then((response) => response.text())
+      .then((message) => {alert(message)})
+      .catch((error) => {console.error('Error:', error)});
+  };
 
 
 
   return (
-    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong, addSong, addArtist, username, isAdmin, setSignedIn}}>
+    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong, addSong, addArtist, getClientRequestInfo, editClientRequest, username, isAdmin, setSignedIn}}>
       {children}
     </endpointContext.Provider>
   )

@@ -1,4 +1,8 @@
 
+body{
+  padding-top: 20px;
+}
+
 .taskbar-button{
     width: fit-content;
     font-size: large;
@@ -16,3 +20,12 @@
     justify-content: space-between;
     top: 0px;
 }
+
+  .request-button{
+    width: fit-content;
+    background-color: #E2AEDD;
+    font-size: large;
+    margin: 50px;
+    padding: 10px;
+    height: fit-content;
+  }
