@@ -8,7 +8,7 @@ import { useEffect } from "react";
 export default function Toolbar({username}) {
     let navigate = useNavigate();
     const [clientRequestStatus, setClientRequest] = useState("");
-    const {getClientRequestInfo} = useContext(endpointContext);
+    const {getClientRequestInfo, editClientRequest} = useContext(endpointContext);
 
     const handleGetRequestInfo = () => {
       getClientRequestInfo(username)
