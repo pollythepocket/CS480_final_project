@@ -190,7 +190,7 @@ const addArtist = (artist_name) => {
       body: JSON.stringify({ requestType, name }),
     })
       .then((response) => response.text())
-      .then((message) => {alert(message)})
+      .then((message) => {})
       .catch((error) => {console.error('Error:', error)});
   };
 
