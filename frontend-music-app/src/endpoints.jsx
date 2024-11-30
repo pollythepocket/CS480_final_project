@@ -22,7 +22,6 @@ export default function EndpointContextProvider( {children} ) {
     })
     .then(response => response.text())
     .then(data => {
-      alert(data);
       if(!data.includes('Duplicate entry')){
         setUsername(username);
         setIsAdmin(isAdmin);
@@ -195,10 +194,23 @@ const addArtist = (artist_name) => {
       .catch((error) => {console.error('Error:', error)});
   };
 
+  const addAlbum = (album_name, artist_name, number_of_songs) =>{
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/albums`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ album_name, artist_name, number_of_songs}),
+    })
+      .then((response) => response.text())
+      .then((message) => {if(message.includes('Already')){
+          alert(message);
+      }})
+      .catch((error) => {console.error('Error:', error)});
+  }
+
 
 
   return (
-    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong, addSong, addArtist, getClientRequestInfo, editClientRequest, username, isAdmin, setSignedIn}}>
+    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong, addSong, addArtist, getClientRequestInfo, editClientRequest, username, isAdmin, setSignedIn, addAlbum}}>
       {children}
     </endpointContext.Provider>
   )

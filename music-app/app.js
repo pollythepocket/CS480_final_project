@@ -182,7 +182,7 @@ app.post('/songs', (req, res) => {
         if (err) {
             console.error('Error adding liked songs:', err);
             return res.status(200).json({
-                message: `Already Added!`
+                message: `Already Added Song!`
             });
         }
         res.status(200).json({
@@ -243,6 +243,24 @@ app.get('/albums', (req, res) => {
     })
 });
 
+app.post('/albums', (req, res) => {
+    const { album_name, artist_name, number_of_songs } = req.body;
+
+
+    const query = `INSERT INTO Albums(album_name, artist_name, duration, number_of_songs, album_image_url) VALUES (?, ?, 0, ?, 'image')`;
+    db.query(query, [album_name, artist_name, number_of_songs ],(err, result) => {
+        if (err) {
+            console.error('Error adding album', err);
+            return res.status(200).json({
+                message: `GRRRR!`
+            });
+        }
+        res.status(200).json({
+            message: `Added New album`
+        });
+    })
+});
+
 /**
  * @route GET /artists
  *        GET /artists?sort=<sort option>
@@ -291,7 +309,7 @@ app.post('/artists', (req, res) => {
         if (err) {
             console.error('Error adding liked songs:', err);
             return res.status(200).json({
-                message: `Already Added!`
+                message: `Artist Already Added!`
             });
         }
         res.status(200).json({

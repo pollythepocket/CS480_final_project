@@ -42,7 +42,6 @@ export default function Toolbar({username}) {
 
       const routeChangeToLogin = () => {
         let path = '/login';
-        setSignedIn(false);
         navigate(path, {state: username});
       } 
 

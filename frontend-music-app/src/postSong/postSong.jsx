@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { endpointContext } from "../endpoints";
 import "./postSong.css";
 
@@ -9,31 +9,103 @@ export default function PostSongPage() {
     const location = useLocation();
     const username = location.state;
     
-    const { addSong, addArtist } = useContext(endpointContext);
+    const { addSong, addArtist, isAdmin, addAlbum} = useContext(endpointContext);
 
-    const [isAlbum, setIsAlbum] = useState("no");
+    const [isAlbum, setIsAlbum] = useState("song");
     const [AlbumName, setAlbumName] = useState("");
-    const [ArtistName, setArtistName] = useState(username);
+    const [ArtistName, setArtistName] = useState("");
     const [Duration, setDuration] = useState("");
     const [songs, setSongs] = useState([]); 
-    const [DurationList, setDurationList] = useState([]);
-    const [songInput, setSongInput] = useState("");
     const [singleSong, setSingleSong] = useState(""); 
 
+
+    useEffect(() =>{
+        if(!isAdmin){
+            setArtistName(username);
+        }
+    },
+    [isAdmin, songs]);
+
+    const handleSetsSongs = (e) => {
+        if (!singleSong.trim()) {
+            alert("Please enter a song name.");
+            return;
+        }
+    
+        if (!ArtistName.trim()) {
+            alert("Please enter an artist name.");
+            return;
+        }
+    
+        if (!Duration.trim()) {
+            alert("Please enter the song duration.");
+            return;
+        }
+
+        if(!AlbumName.trim()){
+            alert("Please enter an album name.");
+        }
+
+        setSongs(prevSongs => [...prevSongs, {song: singleSong, duration: Duration}]);
+
+        setDuration('');
+        setSingleSong('');
+    }
+
     const handleSubmit = () => {
-        if (isAlbum === "yes") {
+        if (isAlbum === "album") {
             console.log("Album created with the following songs:");
             console.log("Album Name:", AlbumName);
             console.log("Artist Name:", ArtistName);
             console.log("Songs:", songs);
+
+            if (!ArtistName.trim()) {
+                alert("Please enter an artist name.");
+                return;
+            }
+            if (songs.length < 1) {
+                alert("Please at least one song.");
+                return;
+            }
+            if(!AlbumName.trim()){
+                alert("Please enter an album name.");
+            }
+
+            addArtist(ArtistName);
+            addAlbum(AlbumName, ArtistName, songs.length);
+
+            songs.forEach(song => {
+                console.log(song.song, ArtistName, AlbumName, song.duration);
+                addSong(song.song, ArtistName, AlbumName, song.duration);
+            });
+
+            navigate("/Songs", {state: username })
+            
+
+
         } else {
             console.log("Single song posted:");
             console.log("Song Name:", singleSong);
             console.log("Artist Name:", ArtistName);
+
+            if (!singleSong.trim()) {
+                alert("Please enter a song name.");
+                return;
+            }
+        
+            if (!ArtistName.trim()) {
+                alert("Please enter an artist name.");
+                return;
+            }
+        
+            if (!Duration.trim()) {
+                alert("Please enter the song duration.");
+                return;
+            }
             
             addArtist(ArtistName);
             addSong(singleSong, ArtistName, null, Duration);
-            navigate("/LikedSongs", {state: username })
+            navigate("/Songs", {state: username })
 
         }
     };
@@ -54,17 +126,6 @@ export default function PostSongPage() {
         setArtistName(e.target.value);
     };
 
-    const handleAddSong = () => {
-        if (songInput.trim() !== '') {
-            setSongs([...songs, songInput]);
-            setSongInput('');
-        }
-    };
-
-    const handleRemoveSong = (index) => {
-        setSongs(songs.filter((_, i) => i !== index));
-    };
-
     const handleSingleSongChange = (e) => {
         setSingleSong(e.target.value);
     };
@@ -75,113 +136,163 @@ export default function PostSongPage() {
 
     return (
         <div className="post-form">
-            <h1>Post Song</h1>
-            <hr />
-            
-            {/* <div className="options">
-                <label>Are you creating an album?</label>
-                <label className="radio-button">
+            {isAlbum === "song" ? (
+                <h1>Post Song</h1>
+            )
+            : isAlbum === "album" ? (
+                <h1>Post Album</h1>
+            )
+            : null
+        }
+        
+        <hr />
+
+
+        <div className="group">
+            <h4 className="label">Are you posting a song or album?</h4>
+            <div>
+                <div className="radio-options">
                     <input
-                        type="radio"
-                        value="yes"
-                        checked={isAlbum === "yes"}
-                        onChange={handleAlbumChange}
+                    type="radio"
+                    name="search-option"
+                    value="song"
+                    checked={isAlbum === "song"}
+                    onChange={handleAlbumChange}
                     />
-                    Yes
-                </label>
-                <label className="radio-button">
+                    <div className="radio-label">Song</div>
+                </div>
+                <div className="radio-options">
                     <input
-                        type="radio"
-                        value="no"
-                        checked={isAlbum === "no"}
-                        onChange={handleAlbumChange}
+                    type="radio"
+                    name="search-option"
+                    value="album"
+                    checked={isAlbum === "album"}
+                    onChange={handleAlbumChange}
                     />
-                    No
-                </label>
+                    <div className="radio-label">Album</div>
+                </div>
             </div>
+        </div>
 
-            {isAlbum === "yes" && (
-                <div>
-                    <div className="album-name">
-                        <label>Album Name</label>
+        <hr/>
+        
+        { isAlbum === "song" ? (
+            <div className="single-song">
+            <div className="row">
+                <div className="single-song-name">
+                    <label>Song Name</label>
+                    <input
+                        type="text"
+                        value={singleSong}
+                        onChange={handleSingleSongChange}
+                        placeholder="Enter your song name"
+                        required
+                    />
+                </div>
+                <div className="single-artist-name">
+                    <label>Artist Name</label>
+                    {isAdmin === true ? (
                         <input
-                            className="album_name"
-                            placeholder="What is the name of your album?"
-                            required
-                            value={AlbumName}
-                            onChange={handleAlbumNameChange}
-                        />
-                    </div>
-                    <div className="artist-name">
-                        <label>Artist Name</label>
+                        className="artist_name"
+                        placeholder={"Enter Artist Name"}
+                        readOnly
+                        value={ArtistName}
+                        onChange={handleArtistChange}
+                        required
+                    />
+                    ) : 
+                    isAdmin === false ? (
                         <input
-                            className="artist_name"
-                            placeholder={username}
-                            readOnly
-                            value={ArtistName}
-                            onChange={handleArtistChange}
-                        />
-                    </div>
-
-                    <div className="add-song">
+                        className="artist_name"
+                        placeholder={username}
+                        readOnly
+                        value={ArtistName}
+                        onChange={handleArtistChange}
+                        required
+                    />
+                    ) : null}
+                </div>
+            </div>
+            <div className="single-duration" style={{padding: '10px'}}>
+                <label>Song Duration</label>
+                <input
+                    className="duration"
+                    placeholder="How Long is the song? Example: '3:12'"
+                    value={Duration}
+                    onChange={handleDurationChange}
+                    required
+                />
+            </div>
+        </div>
+        ) : isAlbum === "album" ? (
+            <div>
+                <div className="single-artist-name">
+                    <label>Artist Name</label>
+                    {isAdmin === true ? (
+                        <input
+                        className="artist_name"
+                        placeholder={"Enter Artist Name"}
+                        readOnly
+                        value={ArtistName}
+                        onChange={handleArtistChange}
+                        required
+                    />
+                    ) : 
+                    isAdmin === false ? (
+                        <input
+                        className="artist_name"
+                        placeholder={username}
+                        readOnly
+                        value={ArtistName}
+                        onChange={handleArtistChange}
+                        required
+                    />
+                    ) : null}
+                </div>
+                <div className="single-artist-name">
+                    <label>Album Name</label>
+                    <input
+                        className="artist_name"
+                        placeholder="Enter Album Name"
+                        value={AlbumName}
+                        onChange={handleAlbumNameChange}
+                        required/>
+                </div>
+                <div className="row">
+                    <div className="single-song-name">
+                        <label>Song Name</label>
                         <input
                             type="text"
-                            value={songInput}
-                            onChange={(e) => setSongInput(e.target.value)}
-                            placeholder="Add a song to your album"
+                            value={singleSong}
+                            onChange={handleSingleSongChange}
+                            placeholder="Enter your song name"
+                            required
                         />
-                        <button onClick={handleAddSong}>Add Song</button>
                     </div>
-
-                    <div className="song-list">
-                        {songs.length === 0 ? (
-                            <p>No songs added yet.</p>
-                        ) : (
-                            songs.map((song, index) => (
-                                <div key={index} className="song-item">
-                                    <span>{song}</span>
-                                    <button onClick={() => handleRemoveSong(index)}>Remove</button>
-                                </div>
-                            ))
-                        )}
-                    </div>
-                </div>
-            )}
-
-            {isAlbum === "no" && ( */}
-                <div className="single-song">
-                    <div className="row">
-                        <div className="single-song-name">
-                            <label>Song Name</label>
-                            <input
-                                type="text"
-                                value={singleSong}
-                                onChange={handleSingleSongChange}
-                                placeholder="Enter your song name"
-                            />
-                        </div>
-                        <div className="single-artist-name">
-                            <label>Artist Name</label>
-                            <input
-                                className="artist_name"
-                                placeholder={username}
-                                readOnly
-                                value={ArtistName}
-                                onChange={handleArtistChange}
-                            />
-                        </div>
-                    </div>
-                    <div className="single-duration">
-                        <label>Song Duration</label>
+                    <div className="single-song-name">
+                        <label>Duration</label>
                         <input
-                            className="duration"
-                            placeholder="How Long is the song? Example: '3:12'"
+                            type="text"
                             value={Duration}
                             onChange={handleDurationChange}
+                            placeholder="How Long is the song? Example: '3:12'"
+                            required
                         />
                     </div>
                 </div>
-            {/* )} */}
+
+                <button onClick={handleSetsSongs}>Add</button>
+
+                <ul>
+                    {songs && songs.map((item, index) => (
+                    <li key={index}>
+                        {item.song}: {item.duration}
+                    </li>
+                    ))}
+                </ul>
+            </div>
+        ) : null}
+
 
             <div className="row">
                 <button onClick={handleBack}>Back</button>
