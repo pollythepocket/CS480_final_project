@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { createContext } from 'react'
 import { useNavigate } from 'react-router';
@@ -26,9 +25,10 @@ export default function EndpointContextProvider( {children} ) {
         setUsername(username);
         setIsAdmin(isAdmin);
         setSignedIn(true);
-        navigate("/songs", {state: username })}
-      })
-    .catch(error => {console.error('Error:', error)});
+        navigate(isAdmin ? "/admin" : "/songs", {state: username });
+      }
+    })
+    .catch(error => console.error('Error:', error));
   };
 
   const loginUser = (username, password, isAdmin) => {
@@ -47,10 +47,10 @@ export default function EndpointContextProvider( {children} ) {
       })
       .then(data => {
         if (data.message.includes('success')) {
-          setUsername(username)
-          setIsAdmin(isAdmin)
-          setSignedIn(true)
-          navigate('/songs', { state: username });
+          setUsername(username);
+          setIsAdmin(isAdmin);
+          setSignedIn(true);
+          navigate(isAdmin ? '/admin' : '/songs', { state: username });
         }
       })
       .catch(error => {
