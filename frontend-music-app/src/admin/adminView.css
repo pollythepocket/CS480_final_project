@@ -1,0 +1,73 @@
+.action-button {
+  background-color: #3f143d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  min-width: 120px;
+  width: fit-content;
+}
+
+.action-button:hover {
+  background-color: #2a0d29;
+}
+
+.song-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+.all-songs-table {
+  min-width: 800px;
+}
+
+.col.name {
+  width: 20%;
+}
+
+.col.artist {
+  width: 30%;
+}
+
+.col.duration {
+  width: 15%;
+  text-align: center;
+}
+
+.col.album {
+  width: 20%;
+  min-width: 130px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .all-songs {
+    padding: 10px;
+  }
+
+  .all-songs-table {
+    min-width: 600px;
+  }
+
+  .action-button {
+    padding: 6px 12px;
+    font-size: 12px;
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .all-songs-table {
+    min-width: 400px;
+  }
+}

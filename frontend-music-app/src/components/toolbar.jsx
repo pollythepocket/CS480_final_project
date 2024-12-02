@@ -1,14 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./toolbar.css";
 import { endpointContext } from "../endpoints";
 import { useNavigate } from "react-router";
-import { useLocation } from "react-router";
-import { useEffect } from "react";
 
 export default function Toolbar({username}) {
     let navigate = useNavigate();
     const [clientRequestStatus, setClientRequest] = useState("");
-    const {getClientRequestInfo, editClientRequest, isAdmin} = useContext(endpointContext);
+    const { getClientRequestInfo, editClientRequest, isAdmin } = useContext(endpointContext);
 
     const handleGetRequestInfo = () => {
       getClientRequestInfo(username)
@@ -56,28 +54,23 @@ export default function Toolbar({username}) {
       }
   
 
-  return (
-    <div className="toolbar">
-          <button type="submit" className="taskbar-button" onClick={routeChange}>Home</button>
-          {isAdmin? "": <button type="submit" className="taskbar-button" onClick={routeChangeToLikedList}>Liked Songs</button> }
+    return (
+        <div className="toolbar">
+            <button type="submit" className="taskbar-button" onClick={routeChange}>Home</button>
+            <button type="submit" className="taskbar-button" onClick={routeChangeToLikedList}>Liked Songs</button>
 
-          {clientRequestStatus === "yes" ? (
-                <button type="submit" className="taskbar-button" onClick={() => handlePostSong()}>Post Song</button>
-            )
- 
-          : clientRequestStatus === "no" ? (
+            {clientRequestStatus === "yes" && (
+                <button type="submit" className="taskbar-button" onClick={handlePostSong}>Post Song</button>
+            )}
+            {clientRequestStatus === "no" && (
                 <button type="submit" className="taskbar-button" onClick={() => handleRequestChange("requesting")}>Request Artist Status</button>
-          )
+            )}
+            {clientRequestStatus === "requesting" && (
+                <button type="submit" className="request-button" disabled>Request Pending</button>
+            )}
+            
 
-          : clientRequestStatus === "requesting" ? (
-            <button type="submit" className="request-button">Request being handled</button>
-          )
-
-          : null
-          }
-              
-
-          <button type="submit" className="taskbar-button" onClick={() => routeChangeToLogin()}>Logout</button>
-    </div>
-  );
+            <button type="submit" className="taskbar-button" onClick={routeChangeToLogin}>Logout</button>
+        </div>
+    );
 }
