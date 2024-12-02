@@ -80,7 +80,7 @@ export default function LikedSongs() {
   return (
     <div className="song-page">
       <Toolbar username={username}/>
-      <h1>{username}'s Songs</h1>
+      <h1>{username}'s Liked Songs</h1>
       <Search
         username={username}
         onSearch={handleSearch}

@@ -9,6 +9,8 @@ export default function EndpointContextProvider( {children} ) {
   const [username, setUsername] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
+  const [notice, setNotice] = useState("");
+  const [popup, setPopup] = useState(false);
 
   const navigate = useNavigate();
   
@@ -76,9 +78,10 @@ export default function EndpointContextProvider( {children} ) {
         if (!json || !json.data) {
             throw new Error('Invalid response structure');
         }
-
         return json.data;
     } catch (error) {
+        setNotice("Failed to get all songs");
+        setPopup(true);
         console.error('Error fetching songs:', error);
         throw error; 
     }
@@ -91,9 +94,13 @@ const addSong = (song_name, artist_name, album_name, duration) => {
     body: JSON.stringify({song_name, artist_name, album_name, duration}),
   })
     .then((response) => response.text())
-    .then((message) => {if(message.includes('Already')){
+    .then((message) => {
+      if (message.includes('Already')){
         alert(message);
-    }})
+      } else {
+        setNotice("song added successfully");
+        setPopup(true);
+      }})
     .catch((error) => {console.error('Error:', error)});
 };
 
@@ -141,9 +148,14 @@ const addArtist = (artist_name) => {
       body: JSON.stringify({ song_id, username }),
     })
       .then((response) => response.text())
-      .then((message) => {if(message.includes('Already')){
+      .then((message) => {
+        if (message.includes('Already')){
           alert(message);
-      }})
+        } else {
+          setNotice("song added to likes successfully");
+          setPopup(true);
+        }
+      })
       .catch((error) => {console.error('Error:', error)});
   };
 
@@ -210,7 +222,7 @@ const addArtist = (artist_name) => {
 
 
   return (
-    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong, addSong, addArtist, getClientRequestInfo, editClientRequest, username, isAdmin, setSignedIn, addAlbum}}>
+    <endpointContext.Provider value={{registerUser, loginUser, getAllSongs, getLikedSongs, addLikedSong, deleteLikedSong, addSong, addArtist, getClientRequestInfo, editClientRequest, username, isAdmin, signedIn, setSignedIn, addAlbum, notice, setNotice, popup, setPopup}}>
       {children}
     </endpointContext.Provider>
   )

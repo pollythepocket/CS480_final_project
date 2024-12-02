@@ -1,0 +1,30 @@
+.notification {
+  background-color: grey;
+  color: white;
+  padding: 10px;
+  position: absolute;
+  width: 300px;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: -40px auto;
+  border-radius: 10px;
+  animation-name: drop;
+  animation-duration: 0.1s;
+}
+
+.notification.hide {
+  opacity: 0;
+  animation: none;
+}
+
+@keyframes drop {
+  0% {
+    margin-top: -100px;
+    opacity: 0;
+  }
+  100% {
+    margin-top: -40px;
+    opacity: 1;
+  }
+}
